@@ -36,10 +36,14 @@ chrome.runtime.onInstalled.addListener(function () {
 
 function getFromStorage(key, callback) {
 
+   const _key  = key ? [key] : null;
 
-   chrome.storage.sync.get([key], function (result) {
+   chrome.storage.sync.get(_key, function (result) {
 
       console.log(result);
+      
+      if (!key) return callback(result);
+
       callback(result[key]);
 
    });

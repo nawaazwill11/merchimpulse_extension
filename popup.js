@@ -18,7 +18,7 @@ const message = {
 const event_def = {
     click: [
         {
-            selector: '#toggle',
+            selector: '.toggle',
             handler: handleToggleClick
         },
         {
@@ -30,12 +30,20 @@ const event_def = {
             handler: navigationClickHandler
         },
         {
-            selector: '.delete',
+            selector: '.delete-bookmark',
             handler: handleBookmarkDelete
         },
         {
             selector: '.export-to',
             handler: handleExport
+        },
+        {
+            selector: '.info-pane-open',
+            handler: handleInfoOpen
+        },
+        {
+            selector: '.info-pane-close',
+            handler: handleInfoClose
         }
     ]
 }
@@ -48,8 +56,10 @@ function allotListeners() {
         event_def[event].forEach((ev) => {
 
             const elements = document.querySelectorAll(ev.selector);
+            console.log(ev.selecor, elements);
             elements.forEach((element) => {
-                element.addEventListener(event, ev.handler)
+                element.addEventListener(event, ev.handler);
+
             });
 
         });
@@ -69,54 +79,75 @@ function sendMessage(message) {
 }
 
 
-function toggleActivation(active) {
+function toggleActivation(key, value, element) {
 
-    const msg = message.set('state', active);
-
-    console.log(active);
+    const msg = message.set(key, value);
 
     sendMessage(msg)
         .then(() => {
-            toggleToggle(active);
+            toggleToggle(value, element);
         });
 
 }
 
 
-function toggleToggle(checked) {
+function toggleToggle(value, element) {
 
-    const toggle = document.getElementById('toggle');
+    const toggle = element; // ? element : document.getElementById('toggle');
     const label = toggle.parentElement.children[1];
+    const checked = value ? true : false;
 
     toggle.checked = checked;
 
-    const status = document.getElementById('status');
+    label.style.backgroundColor = checked ? '#F57200' : '#aaa';
 
-    const value_def = {
-        true: {
-            color: '#F57200',
-            text: 'ACTIVE'
-        },
-        false: {
-            color: '#aaa',
-            text: 'INACTIVE'
-        }
+    if (toggle.dataset.type === 'state') {
+
+        const status = document.getElementById('status');
+
+        status.innerText = checked ? 'ACTIVE' : 'INACTIVE';
+
     }
+    else {
 
-    status.style.color = value_def[checked].color;
-    status.innerText = value_def[checked].text;
-    label.style.backgroundColor = value_def[checked].color;
+        const filter_toggles = document.querySelectorAll('input[data-type="filter"]');
+
+        filter_toggles.forEach((filter) => {
+
+            if (filter === toggle) return ;
+
+            filter.checked = false;
+
+            const label = filter.parentElement.children[1];
+
+            label.style.backgroundColor = '#aaa';
+
+        })
+
+    }
 
 }
 
 
 function handleToggleClick(e) {
 
+    // console.log(e);
+
     const element = e.currentTarget;
+    const type = element.dataset.type;
+    const key = type === 'state' ? type : 'recent_filter';
 
-    const active = element.checked ? true : false;
+    const value = element.checked ?
+        (
+            type === 'state' ?
+                true : element.dataset.filter
+        ) :
+        (
+            type === 'state' ?
+                false : ''
+        );
 
-    toggleActivation(active);
+    toggleActivation(key, value, element);
 
 }
 
@@ -205,30 +236,30 @@ function handleBookmarkDelete(e) {
 
 }
 
+function consideNumbers(number) {
+
+    let percent = number * 100;
+
+    const number_string = percent.toString();
+
+    const decimal_pos = number_string.indexOf('.')
+
+    if (decimal_pos >= 0) {
+
+        const decimal_count = number_string.slice(decimal_pos,).length;
+
+        if (decimal_count > 2) percent = percent.toFixed(2);
+
+    }
+
+    return Number(percent)
+
+}
+
 
 const exportTo = function (data) {
 
     const base_file_name = 'merch-impluse-stats';
-
-    function consideNumbers(number) {
-
-        let percent = number * 100;
-
-        const number_string = percent.toString();
-
-        const decimal_pos = number_string.indexOf('.')
-
-        if (decimal_pos >= 0) {
-
-            const decimal_count = number_string.slice(decimal_pos,).length;
-
-            if (decimal_count > 2) percent = percent.toFixed(2);
-
-        }
-
-        return Number(percent)
-
-    }
 
     const getDateTime = function () {
 
@@ -406,7 +437,7 @@ const exportTo = function (data) {
 
                 data.forEach((data_node, index) => {
 
-                    console.log(data_node.bookmark_info.search_date)
+                    // console.log(data_node.bookmark_info.search_date)
 
                     const bookmark_info = data_node.bookmark_info;
                     const score = data_node.score;
@@ -435,13 +466,13 @@ const exportTo = function (data) {
                             ]
                         }
                     ]
-                    console.log(row);
+                    // console.log(row);
 
                     row_def.push(...row);
 
                 });
 
-                console.log(row_def);
+                // console.log(row_def);
 
                 const rows = function () {
 
@@ -457,13 +488,13 @@ const exportTo = function (data) {
 
                 }();
 
-                console.log(rows);
+                // console.log(rows);
 
                 return `<table><tbody>${rows}</tbody></table>`;
 
             }();
 
-            console.log(table);
+            // console.log(table);
 
             download(getDownloadObject('xls', encodeURIComponent(table)));
 
@@ -474,7 +505,7 @@ const exportTo = function (data) {
 
         const { file_name, download_data } = downloadObject;
 
-        console.log(download_data);
+        // console.log(download_data);
 
         const download_link = document.createElement('a');
 
@@ -510,44 +541,142 @@ function handleExport(e) {
 }
 
 
-function requester(msg, callback) {
+function showInfoPane(bookmark) {
 
-    console.log('here');
+    const info_pane = document.querySelector('.info-pane');
+    const info_list = info_pane.querySelector('.info-pane-list');
 
-    return new Promise((resolve) => {
+    console.log(bookmark)
 
-        sendMessage(msg.get)
-            .then((response) => {
+    const info_list_def = [
+        {
+            text: 'Exported On',
+            value: bookmark.bookmark_info.search_date
+        },
+        {
+            text: 'Profitability',
+            value: bookmark.score.profitability
+        },
+        {
+            text: 'Competition',
+            value: bookmark.score.competition
+        },
+        {
+            text: 'Overall Score',
+            value: bookmark.score.overall_score
+        }
+    ]
 
-                console.log(response);
 
-                if (response === undefined) {
-                    sendMessage(msg.set)
-                        .then(() => resolve());
-                }
-                else {
-                    callback(response);
-                    resolve(console.log('resolved'));
-                }
+    let info_list_content = info_list_def.map((info) => {
 
+        if (info.text !== 'Exported On') {
+            info.value = `${consideNumbers(info.value)}%`;
+        }
+        
+        return (
+            `<li class="list-item info-pane-item">
+                <div class="info-pane-item-content">
+                    <div class="left-content">${info.text}</div>
+                    <div class="right-content">${info.value}</div>
+                </div>
+            </li>`
+        )
 
-            })
+    }).join('');
+    
+
+    const parser = new DOMParser();
+    const dom = parser.parseFromString(info_list_content, 'text/html');
+    
+    Array.from(dom.body.children).forEach((li) => {
+
+        info_list.appendChild(li);
 
     });
+
+    info_pane.style.display = 'block';
 
 }
 
 
-function loadStatus() {
+function handleInfoOpen(e) {
 
-    const key = 'state';
+    const element = e.currentTarget;
+    const list_item = element.closest('.list-item');
+    const url = list_item.querySelector('a').href;
+    const msg = message.get('bookmarks');
 
-    const msg = {
-        get: message.get(key),
-        set: message.set(key, false)
-    };
+    sendMessage(msg)
+        .then((bookmarks) => {
 
-    return requester(msg, toggleToggle);
+            const this_bookmark = bookmarks.filter((bookmark) => bookmark.bookmark_info.url === url)[0];
+
+            showInfoPane(this_bookmark);
+
+        })
+
+
+}
+
+
+function handleInfoClose(e) {
+
+    const element = e.currentTarget;
+
+    const info_pane = element.closest('.info-pane');
+
+    const info_list = info_pane.querySelector('.info-pane-list');
+    info_list.innerHTML = '';
+    info_pane.style.display = 'none';
+
+}
+
+// function requester(msg, callback) {
+
+//     // console.log('here');
+
+//     return new Promise((resolve) => {
+
+//         sendMessage(msg.get)
+//             .then((response) => {
+
+//                 resolve(response);
+
+//                 // // console.log(response);
+
+//                 // if (response === undefined) {
+//                 //     sendMessage(msg.set)
+//                 //         .then(() => resolve());
+//                 // }
+//                 // else {
+//                 //     callback(response);
+//                 //     resolve(
+//                 //         // console.log('resolved')
+//                 //     );
+//                 // }
+
+
+//             })
+
+//     });
+
+// }
+
+
+function loadStatus(state) {
+
+    // const key = 'state';
+
+    // const msg = {
+    //     get: message.get(key),
+    //     set: message.set(key, false)
+    // };
+
+    // return requester(msg, toggleToggle);
+
+    const extension_toggle = document.getElementById('toggle');
+    toggleToggle(state, extension_toggle);
 
 }
 
@@ -560,56 +689,14 @@ function populateBookmarks(bookmarks) {
 
         const html_string = `<li class="list-item">
             <div class="bookmark-node">
-                <div class="bookmark-link-text">
+                <div class="link-text bookmark-link-text">
                     <a href="${bookmark.bookmark_info.url}">
                         ${bookmark.bookmark_info.search_term}
                     </a>
                 </div>
                 <div class="bookmark-options">
                     <div class="bookmark-option">
-                        <button id="info-show" class="info-pane-opener round-button">i</button>
-                        <div class="info-pane" style="display: none;">
-                            <div class="info-pane-header">
-                                <button id="info-pane-close">x</button>
-                                <span class="info-pane-header-text">Bookmark Information</span>
-                            </div>
-                            <div class="info-pane-content">
-                                <ul class="content-list info-pane-list">
-                                    <li class="list-item info-pane-item">
-                                        <div class="info-pane-item-content">
-                                            <div class="left-content">Exported on</div>
-                                            <div class="right-content">
-                                                ${bookmark.bookmark_info.search_date}
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="list-item info-pane-item">
-                                        <div class="info-pane-item-content">
-                                            <div class="left-content">Profitability</div>
-                                            <div class="right-content">
-                                                ${bookmark.score.profitability}
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="list-item info-pane-item">
-                                        <div class="info-pane-item-content">
-                                            <div class="left-content">Competition</div>
-                                            <div class="right-content">
-                                                ${bookmark.score.competition}
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="list-item info-pane-item">
-                                        <div class="info-pane-item-content">
-                                            <div class="left-content">Overall Score</div>
-                                            <div class="right-content">
-                                                ${bookmark.score.overa}
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        <button id="info-show" class="info-pane-open round-button">i</button>
                     </div>
                     <div class="bookmark-option">
                         <button class="delete-bookmark">remove</button>
@@ -628,28 +715,44 @@ function populateBookmarks(bookmarks) {
 
 }
 
+function setFilter(filter_name) {
+
+    const element = document.getElementById('toggle-' + filter_name);
+
+    toggleToggle(filter_name, element);
+
+}
+
 
 function fetchData() {
 
-    const key = 'bookmarks';
+    const key = null;
 
-    const msg = {
-        get: message.get(key),
-        set: message.set(key, [])
-    };
+    const msg = message.get(key);
 
-    return requester(msg, populateBookmarks);
+    // return requester(msg, populateBookmarks);
+    return sendMessage(msg)
 }
 
 function initialize() {
 
-    loadStatus()
-        .then(() => {
-            fetchData()
-                .then(() => {
-                    allotListeners();
-                });
-        });
+    // loadStatus()
+    //     .then(() => {
+    //         fetchData()
+    //             .then(() => {
+    //                 allotListeners();
+    //             });
+    //     });
+
+    fetchData()
+        .then((data) => {
+            console.log(data);
+            loadStatus(data.state);
+            populateBookmarks(data.bookmarks);
+            setFilter(data.recent_filter);
+            allotListeners();
+        })
+    
 
 }
 
