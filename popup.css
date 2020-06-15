@@ -2,6 +2,11 @@
     --container-width: 280px;
 }
 
+html, body, ul {
+    margin: 0;
+    padding: 0;
+}
+
 * {
     box-sizing: border-box;
     position: relative;
@@ -195,6 +200,8 @@ header {
 
 .list-item {
     display: flex;
+    border-bottom: 1px solid lightgray;
+    padding: 0.85rem 0;
 }
 .list-item-content {
     flex: 5;
@@ -228,10 +235,7 @@ header {
     padding: 0;
     margin: 0;
 }
-.list-item {
-    border-bottom: 1px solid lightgray;
-    padding-bottom: 0.85rem;
-}
+
 .bookmark-link-text {
     flex: 3;
 }
@@ -337,4 +341,6 @@ button:focus {
     background-color: #F57200;
     color: white;
     border: 1px solid white;
+}.option-list {
+    list-style: none;
 }

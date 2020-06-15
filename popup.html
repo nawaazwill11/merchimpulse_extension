@@ -31,8 +31,8 @@
                 </div>
                 <div class="row">
                     <div class="option-container">
-                        <div class="row">
-                            <div class="main-option">
+                        <ul class="option-list">
+                            <li class="main-option">
                                 <div class="option forward" data-open="bookmarks">
                                     <div class="option-title">
                                         View bookmarks
@@ -41,24 +41,34 @@
                                         <img src="merchui/average.svg" alt="">
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="main-option">
-                                <div class="option forward" data-open="exports">
-                                    <div class="option-title">
-                                        Export Bookmarks
-                                    </div>
-                                    <div class="option-icon">
-                                        <img src="merchui/average.svg" alt="" width="10px">
-                                    </div>
+                            </li>
+                        </ul>
+                        <li class="main-option">
+                            <div class="option forward" data-open="exports">
+                                <div class="option-title">
+                                    Export Bookmarks
+                                </div>
+                                <div class="option-icon">
+                                    <img src="merchui/average.svg" alt="" width="10px">
                                 </div>
                             </div>
-                        </div>
+                        </li>
+                        <li class="main-option">
+                            <div class="option forward" data-open="filters">
+                                <div class="option-title">
+                                    Filters
+                                </div>
+                                <div class="option-icon">
+                                    <img src="merchui/average.svg" alt="" width="10px">
+                                </div>
+                            </div>
+                        </li>
+                        
                     </div>
                 </div>
             </div>
-            <div class="tab tab-2">
+            <div class="tab tab-2"> 
+                <!-- Dedicated Head -->
                 <div class="row">
                     <div class="tab-head">
                         <div class="navigate back">
@@ -76,7 +86,7 @@
                 <div id="bookmarks" class="tab-content">
                     <div class="row">
                         <div class="content-container">
-                            <ul class="content-list bookmark-list">
+                            <ul id="bookmark-list" class="content-list">
                                 <li class="list-item">
                                     <div class="bookmark-node">
                                         <div class="bookmark-link-text">

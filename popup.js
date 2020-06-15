@@ -617,20 +617,7 @@ function populateBookmarks(bookmarks) {
                 </div>
             </div>
         </li>`;
-        /* const html_string = `
-        
-            <li class="list-item">
-                <div class="list-item-content">
-                    <a href="${bookmark.bookmark_info.url}" rel="noopener" target="_blank">
-                        <span class="item-text">${bookmark.bookmark_info.search_term}</span>
-                        <img class="icon" src="merchui/out.svg" alt="">
-                    </a>
-                </div>
-                <div class="list-item-action">
-                    <img class="icon delete" src="merchui/delete.svg" alt="">
-                </div>
-            </li>
-        `; */
+
         const parser = new DOMParser();
         const dom = parser.parseFromString(html_string, 'text/html');
         const list_item = dom.body.children[0];
