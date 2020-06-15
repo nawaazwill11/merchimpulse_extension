@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="./popup.css">
+</head>
+
+<body>
+    <header>
+        Merch Impulse
+    </header>
+    <div class="container">
+        <div id="tab-container">
+            <div class="tab tab-1">
+                <div class="row">
+                    <div id="activation">
+                        <div id="switch">
+                            <div class="checkbox-container yellow">
+                                <input type="checkbox" id="toggle" />
+                                <label for="toggle"></label>
+                                <div class="active-circle"></div>
+                            </div>
+                        </div>
+                        <div id="status">
+                            INACTIVE
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="divider"></div>
+                </div>
+                <div class="row">
+                    <div class="option-container">
+                        <div class="row">
+                            <div class="main-option">
+                                <div class="option forward" data-open="bookmarks">
+                                    <div class="option-title">
+                                        View bookmarks
+                                    </div>
+                                    <div class="option-icon">
+                                        <img src="merchui/average.svg" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="main-option">
+                                <div class="option forward" data-open="exports">
+                                    <div class="option-title">
+                                        Export Bookmarks
+                                    </div>
+                                    <div class="option-icon">
+                                        <img src="merchui/average.svg" alt="" width="10px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab tab-2">
+                <div class="row">
+                    <div class="tab-head">
+                        <div class="navigate back">
+                            <img class="navigate-icon" src="merchui/average.svg" alt="" width="10px">
+                            <span class="navigate-text">
+                                Back
+                            </span>
+                        </div>
+                        <!-- <div class="bookmark-count">
+                            Total: 
+                            <span id="total-bookmark">2</span>
+                        </div> -->
+                    </div>
+                </div>
+                <div id="bookmarks" class="tab-content">
+                    <div class="row">
+                        <div class="content-container">
+                            <ul class="content-list bookmark-list">
+                                <li class="list-item">
+                                    <div class="bookmark-node">
+                                        <div class="bookmark-link-text">
+                                            <a href="#!">T-SHIRT</a>
+                                        </div>
+                                        <div class="bookmark-options">
+                                            <div class="bookmark-option">
+                                                <button id="info-show" class="info-pane-opener round-button">i</button>
+                                                <div class="info-pane" style="display: none;">
+                                                    <div class="info-pane-header">
+                                                        <button id="info-pane-close">x</button>
+                                                        <span class="info-pane-header-text">Bookmark Information</span>
+                                                    </div>
+                                                    <div class="info-pane-content">
+                                                        <ul class="content-list info-pane-list">
+                                                            <!-- <li class="list-item info-pane-item">
+                                                                <div class="info-pane-item-content">
+                                                                    <div class="left-content">Exported on</div>
+                                                                    <div class="right-content">22/02/2020</div>
+                                                                </div>
+                                                            </li> -->
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="bookmark-option">
+                                                <button class="delete-bookmark">remove</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>                                
+                            </ul>
+                        </div>
+                        <!-- <div class="list-container">
+                            <ul id="bookmark-list" class="list">
+                                <li class="list-item">
+                                    <div class="list-item-content">
+                                        <a href="#!" rel="noopener" target="_blank">
+                                            <span class="item-text">tshirt</span>
+                                            <img class="icon" src="merchui/out.svg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="list-item-action">
+                                        <img class="icon delete" src="merchui/delete.svg" alt="">
+                                    </div>
+                                </li>
+                            </ul>
+                        </div> -->
+                    </div>
+                </div>
+                <div id="exports" class="tab-content">
+                    <div class="row">
+                        <div class="list-container">
+                            <ul id="export-options" class="list">
+                                <li class='export-to' data-type="json">
+                                    <div class="export-option">
+                                        <button>Export to JSON</button>
+                                    </div>
+                                </li>
+                                <li class='export-to' data-type="csv">
+                                    <div class="export-option">
+                                        <button>Export to CSV</button>
+                                    </div>
+                                </li>
+                                <li class='export-to' data-type="xls">
+                                    <div class="export-option">
+                                        <button>Export to XLS</button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="popup.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+{
+    "name": "Merch Impulse",
+    "version": "1.0.0",
+    "description": "Gets keyword source of Merch By Amazon",
+    "background": {
+        "persistent": false,
+        "scripts": ["background.js"]
+    },
+    "page_action": {
+        "default_icon": "icons/pie32.png",
+        "defaukt_title": "Merch Impulse Extension",
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "declarativeContent",
+        "activeTab",
+        "storage",
+        "webNavigation",
+        "tabs"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "http://localhost:3000/",
+                "https://www.tmdn.org/tmview/api/search/*",
+                "https://www.amazon.com/*?*=*",
+                "https://www.amazon.de/*?*=*",
+                "https://www.amazon.co.uk/*?*=*"
+                ],
+            "js": [
+                "inject.js",
+                "process.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "merchui/*"
+    ],
+    "externally_connectable": {
+        "matches": [
+            "https://www.tmdn.org/tmview/api/search/*",
+            "http://localhost:3000/*",
+            "https://www.amazon.com/*?*=*",
+            "https://www.amazon.de/*?*=*",
+            "https://www.amazon.co.uk/*?*=*"
+        ]
+    },
+    "icons": {
+        "16": "icons/pie16.png",
+        "32": "icons/pie32.png",
+        "48": "icons/pie48.png",
+        "128": "icons/pie128.png"
+    },
+    "manifest_version": 2
+}
