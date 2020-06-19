@@ -93,6 +93,8 @@ function toggleActivation(key, value, element) {
 
 function toggleToggle(value, element) {
 
+    // alert(element);
+
     const toggle = element; // ? element : document.getElementById('toggle');
     const label = toggle.parentElement.children[1];
     const checked = value ? true : false;
@@ -131,7 +133,7 @@ function toggleToggle(value, element) {
 
 function handleToggleClick(e) {
 
-    // console.log(e);
+    console.log(e);
 
     const element = e.currentTarget;
     const type = element.dataset.type;
@@ -146,6 +148,8 @@ function handleToggleClick(e) {
             type === 'state' ?
                 false : ''
         );
+
+        console.log(key, value);
 
     toggleActivation(key, value, element);
 
@@ -683,6 +687,8 @@ function loadStatus(state) {
 
 function populateBookmarks(bookmarks) {
 
+    if (!bookmarks) return;
+
     const bookmark_list = document.getElementById('bookmark-list');
 
     bookmarks.forEach((bookmark) => {
@@ -716,6 +722,8 @@ function populateBookmarks(bookmarks) {
 }
 
 function setFilter(filter_name) {
+
+    if (!filter_name) return ;
 
     const element = document.getElementById('toggle-' + filter_name);
 

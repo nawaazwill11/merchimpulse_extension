@@ -85,6 +85,7 @@ header {
     font-size: 1rem;
     color: gray;
     margin-left: 0.85rem;
+    width: 60px;
 }
 #switch {
     position: relative;
