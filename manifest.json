@@ -28,8 +28,9 @@
                 "https://www.amazon.co.uk/*?*=*"
                 ],
             "js": [
-                "inject.js",
-                "process.js"
+                "middleware.js",
+                "process.js",
+                "inject.js"
             ]
         }
     ],

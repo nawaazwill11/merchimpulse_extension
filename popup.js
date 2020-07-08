@@ -1,4 +1,4 @@
-const message = {
+/* const message = {
     get: function (key) {
         return {
             type: 'STORAGE_GET',
@@ -764,4 +764,6 @@ function initialize() {
 
 }
 
-initialize();
+initialize(); */
+
+middleware();
