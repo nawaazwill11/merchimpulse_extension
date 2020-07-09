@@ -54,4 +54,4 @@ const inject = function () {
         insertContainer: insertContainer,
         appendScripts: appendScripts
     }  
-}()
+}();
