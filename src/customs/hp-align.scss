@@ -1,0 +1,31 @@
+.hp {
+// Text
+    // Center
+    &.text-center {
+        text-align: center;
+    }
+
+
+// Flex
+    // Center
+    &.h-center {
+        justify-content: center;
+    }
+    &.v-center {
+        align-items: center;   
+    }
+    // Left
+    &.left {
+        justify-content: left;
+    }
+    &.right {
+        align-items: right;
+    }
+    &.top {
+        align-items: flex-start;
+    }
+    &.bottom {
+        align-items: flex-end;
+    }
+}
+
