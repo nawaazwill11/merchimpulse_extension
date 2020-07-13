@@ -1,5 +1,9 @@
 .hp {
-    &.btn-padding5 {
-        
+    // &.btn-padding_5 {
+    //     @extend .padding_5
+    // }
+
+    .btn {
+        border: none;
     }
 }

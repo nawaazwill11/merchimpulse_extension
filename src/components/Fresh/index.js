@@ -13,11 +13,13 @@ function Fresh(props) {
             <div className="hp font-size1_3">
               Welcome To
                 </div>
-            <div className="hp font-size1_6 bold">
+            <div className="hp font-size2 bold">
               Merch Impulse
               </div>
-            <div className="hp btn-padding5">
-              <button className="hp border-radius1_1">Sign In</button>
+            <div>
+              <button className="hp btn border-radius1_1 
+              padding_5 login-btn font-size1_3">
+                Sign In</button>
             </div>
           </div>
         </div>
