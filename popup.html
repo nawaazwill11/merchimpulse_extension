@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="./popup.css">
+</head>
+
+<body>
+    <header>
+        Merch Impulse
+    </header>
+    <div class="container">
+        <div id="tab-container">
+            <div class="tab tab-1">
+                <div class="row">
+                    <div id="activation">
+                        <div id="switch">
+                            <div class="checkbox-container yellow">
+                                <input type="checkbox" id="toggle" class="toggle" data-type="state" />
+                                <label for="toggle"></label>
+                                <div class="active-circle"></div>
+                            </div>
+                        </div>
+                        <div id="status">
+                            INACTIVE
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="divider"></div>
+                </div>
+                <div class="row">
+                    <div class="option-container">
+                        <ul class="option-list">
+                            <li class="main-option">
+                                <div class="option forward" data-open="filters">
+                                    <div class="option-title">
+                                        Filters
+                                    </div>
+                                    <div class="option-icon">
+                                        <img src="merchui/average.svg" alt="" width="10px">
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="main-option">
+                                <div class="option forward" data-open="bookmarks">
+                                    <div class="option-title">
+                                        View bookmarks
+                                    </div>
+                                    <div class="option-icon">
+                                        <img src="merchui/average.svg" alt="">
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="main-option">
+                                <div class="option forward" data-open="exports">
+                                    <div class="option-title">
+                                        Export Bookmarks
+                                    </div>
+                                    <div class="option-icon">
+                                        <img src="merchui/average.svg" alt="" width="10px">
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div id="authenticate-option" class="option forward" data-open="authenticate">
+                    <div class="option-title">
+                        Login
+                    </div>
+                    <!-- <div class="option-icon">
+                        <img src="merchui/average.svg" alt="" width="10px">
+                    </div> -->
+                </div>
+            </div>
+            <div class="tab tab-2">
+                <!-- Dedicated Head -->
+                <div id="bookmarks" class="tab-content">
+                    <div class="row">
+                        <div class="tab-head">
+                            <div class="navigate back">
+                                <img class="navigate-icon" src="merchui/average.svg" alt="" width="10px">
+                                <span class="navigate-text">
+                                    Back
+                                </span>
+                            </div>
+                            <!-- <div class="bookmark-count">
+                                Total: 
+                                <span id="total-bookmark">2</span>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="list-container">
+                            <ul id="bookmark-list" class="list"></ul>
+                        </div>
+                    </div>
+                    <div class="info-pane" style="display: none;">
+                        <div class="info-pane-header">
+                            <button class="info-pane-close">x</button>
+                            <span class="info-pane-header-text">Bookmark Information</span>
+                        </div>
+                        <div class="info-pane-content">
+                            <ul class="info-pane-list">
+                                <!-- <li class="list-item info-pane-item">
+                                    <div class="info-pane-item-content">
+                                        <div class="left-content">Exported on</div>
+                                        <div class="right-content">22/02/2020</div>
+                                    </div>
+                                </li> -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="filters" class="tab-content">
+                    <div class="row">
+                        <div class="tab-head">
+                            <div class="navigate back">
+                                <img class="navigate-icon" src="merchui/average.svg" alt="" width="10px">
+                                <span class="navigate-text">
+                                    Back
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="list-container">
+                            <ul id="filter-options" class="list">
+                                <li class='filter'>
+                                    <div class="filter-option">
+                                        <div class="switch-text">
+                                            T-Shirt
+                                        </div>
+                                        <div class="checkbox-container">
+                                            <input type="checkbox" id="toggle-t-shirt" class="toggle" data-type="filter"
+                                                data-filter="t-shirt" />
+                                            <label for="toggle-t-shirt"></label>
+                                            <div class="active-circle"></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class='filter'>
+                                    <div class="filter-option">
+                                        <div class="switch-text">
+                                            Premium
+                                        </div>
+                                        <div class="checkbox-container">
+                                            <input type="checkbox" id="toggle-premium" class="toggle" data-type="filter"
+                                                data-filter="premium" />
+                                            <label for="toggle-premium"></label>
+                                            <div class="active-circle"></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class='filter'>
+                                    <div class="filter-option">
+                                        <div class="switch-text">
+                                            Popsocket
+                                        </div>
+                                        <div class="checkbox-container">
+                                            <input type="checkbox" id="toggle-popsocket" class="toggle"
+                                                data-type="filter" data-filter="popsocket" />
+                                            <label for="toggle-popsocket"></label>
+                                            <div class="active-circle"></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class='filter'>
+                                    <div class="filter-option">
+                                        <div class="switch-text">
+                                            Sweatshirt
+                                        </div>
+                                        <div class="checkbox-container">
+                                            <input type="checkbox" id="toggle-sweatshirt" class="toggle"
+                                                data-type="filter" data-filter="sweatshirt" />
+                                            <label for="toggle-sweatshirt"></label>
+                                            <div class="active-circle"></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class='filter' data-type="t-shirt">
+                                    <div class="filter-option no-border">
+                                        <div class="switch-text">
+                                            Longsleeve
+                                        </div>
+                                        <div class="checkbox-container">
+                                            <input type="checkbox" id="toggle-longsleeve" class="toggle"
+                                                data-type="filter" data-filter="longsleeve" />
+                                            <label for="toggle-longsleeve"></label>
+                                            <div class="active-circle"></div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="exports" class="tab-content">
+                    <div class="row">
+                        <div class="tab-head">
+                            <div class="navigate back">
+                                <img class="navigate-icon" src="merchui/average.svg" alt="" width="10px">
+                                <span class="navigate-text">
+                                    Back
+                                </span>
+                            </div>
+                            <!-- <div class="bookmark-count">
+                                Total: 
+                                <span id="total-bookmark">2</span>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="list-container">
+                            <ul id="export-options" class="list">
+                                <li class='export-to' data-type="json">
+                                    <div class="export-option">
+                                        <button>Export to JSON</button>
+                                    </div>
+                                </li>
+                                <li class='export-to' data-type="csv">
+                                    <div class="export-option">
+                                        <button>Export to CSV</button>
+                                    </div>
+                                </li>
+                                <li class='export-to' data-type="xls">
+                                    <div class="export-option">
+                                        <button>Export to XLS</button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="authenticate" class="tab-content">
+                    <div class="row">
+                        <div class="tab-head">
+                            <div class="navigate back">
+                                <img class="navigate-icon" src="merchui/average.svg" alt="" width="10px">
+                                <span class="navigate-text">
+                                    Back
+                                </span>
+                                <div class="link-text navigate-header">
+                                    <a href="https://merchimpulse.com/signup" target="_blank">Sign Up?</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="list-container">
+                            <form id="login-form">
+                                <ul id="form-input-list" class="list">
+                                    <li class="form-input-option" data-type="email">
+                                        <div class="form-option">
+                                            <input type="email" placeholder="Eg. john_doe@mail.com">
+                                        </div>
+                                    </li>
+                                    <li class="form-input-option" data-type="password">
+                                        <div class="form-option">
+                                            <input type="password" placeholder="********">
+                                        </div>
+                                    </li>
+                                    <li class="form-input-option" data-type="submit">
+                                        <div class="form-option">
+                                            <button id="login" type="submit">Login</button>
+                                        </div>
+                                    </li>
+                                </ul>                                
+                            </form>
+                            <div id="troubleshoot" class="row link-text">
+                                <a href="https://merchimpulse.com/login-assistance">Troubleshoot problem?</a>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="middleware.js"></script>
+    <script src="popup.js"></script>
+</body>
+
+</html>
