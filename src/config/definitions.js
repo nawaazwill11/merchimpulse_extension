@@ -1,1 +1,0 @@
-export const extension_id = 'ccicnpdeajgokkadlkfhbanikncnmjmg';
