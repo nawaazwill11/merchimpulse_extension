@@ -1,25 +1,43 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
+  "name": "Merch Impulse",
+  "version": "1.0.0",
+  "description": "A statistical tool to benefit on Merch By Amazon",
+  "background": {
+      "persistent": false,
+      "scripts": ["background.js"]
+  },
+  "page_action": {
+      "default_icon": "mi_128.png",
+      "defaukt_title": "Merch Impulse Extension",
+      "default_popup": "index.html"
+  },
+  "permissions": [
+      "declarativeContent",
+      "activeTab",
+      "storage",
+      "webNavigation",
+      "tabs"
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "web_accessible_resources": [
+      "merchui/*"
+  ],
+  "externally_connectable": {
+      "matches": [
+          "https://www.tmdn.org/tmview/api/search/*",
+          "http://localhost:3000/*",
+          "https://www.amazon.com/*?*=*",
+          "https://www.amazon.de/*?*=*",
+          "https://www.amazon.co.uk/*?*=*"
+      ]
+  },
+  "icons": {
+      "16": "mi_16.png",
+      "32": "mi_32.png",
+      "48": "mi_48.png",
+      "128": "mi_128.png",
+      "256": "mi_256.png",
+      "512": "mi_512.png"
+  },
+  "content_security_policy": "script-src 'self' 'sha256-plQvMOHFGtj0KvvRBtQ2QDKgP5aL7svRM8l7xf6FY+E='; object-src 'self'",
+  "manifest_version": 2
 }
