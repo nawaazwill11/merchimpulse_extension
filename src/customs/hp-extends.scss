@@ -1,0 +1,8 @@
+.primary-contrast {
+    background-color: $primary;
+    color: $contrast
+}
+.primary-contrast-inverse {
+    color: $primary;
+    background-color: $contrast;
+}

@@ -1,9 +1,14 @@
 .welcome-text {
     height: 180px;
     justify-content: space-around;
+
+    .top {
+        position: relative;
+        top: 0.5rem;
+    }
 }
 .login-btn {
     width: 10rem;
     background-color: #F57200;
     color: white;
-} 
+}

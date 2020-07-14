@@ -1,16 +1,10 @@
+@import './hp-variables.scss';
 @import './hp-grid.scss';
 @import './hp-align.scss';
 @import './hp-relation.scss';
 @import './hp-text.scss';
 @import './hp-btn.scss';
+@import './hp-inputbox.scss';
+@import './hp-position.scss';
+@import './hp-extends.scss';
 
-.hp {
-
-    &.flex {
-        display: flex;
-    }
-    &.flex-column {
-        display: flex;
-        flex-direction: column;
-    }
-}

@@ -18,7 +18,10 @@
 }
 
 .hp {
-    $selectors: ("padding", "margin", "font-size", "border-radius");
+    $selectors: (
+        "padding", "padding-bottom", "padding-top", "padding-left", "padding-right", 
+        "margin", "margin-bottom", "margin-top", "margin-left", "margin-right", 
+        "font-size", "border-radius");
 
     @each $selector in $selectors {
         @for $i from 1 to 101 {
@@ -35,5 +38,15 @@
     }
     &.no-padding {
         padding: 0;
+    }
+
+    $selectors: ("flex");
+
+    @each $selector in $selectors {
+        @for $i from 1 to 31 {
+            &.flex#{$i} {
+                flex: $i;
+            }
+        }
     }
 }

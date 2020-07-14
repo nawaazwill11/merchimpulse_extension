@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.scss';
-import { Error, Fresh, Main } from '../components';
+import { Error, Fresh, Login, Main } from '../components';
 import { getAppState } from './sidekick';
 
 function App(props) {
@@ -20,6 +20,19 @@ function App(props) {
 
   const [state, setState] = useState('fresh');
   const [items, setItems] = useState({});
+  const [navigate, setNavigation] = (
+    useState({
+        history: [],
+        current: 0, // index
+        goBack: function () {
+          if (this.current) {
+            const back = this.history[this.current - 1];
+            this.current--;
+            setNavigation(back);
+          }
+        }
+      })
+  );
 
   useEffect(() => {
 
@@ -30,16 +43,19 @@ function App(props) {
   const child = function (state) {
 
     if (state === 'fresh')
-      return <Fresh />
+      return <Fresh navigate={navigate} setAppState={setState} />
+
+    else if (state === 'login')
+      return <Login navigate={navigate} setAppState={setState} />
 
     else if (state === 'full' || state === 'expired')
-      return <Main type={state} />
+      return <Main navigate={navigate} type={state} />
 
     else return <Error />
   };
 
   return (
-      child(state)
+    child(state)
   );
 }
 

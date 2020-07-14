@@ -4,6 +4,17 @@
     // }
 
     .btn {
+        @extend .padding_5;
+        @extend .border-radius1_1;
         border: none;
+        min-width: 100px;
+        background-color: white;
+        color: $dark-color;
+    }
+    .btn-primary {
+        @extend .primary-contrast;
+    }
+    .btn-primary-inverse {
+        @extend .primary-contrast-inverse;
     }
 }

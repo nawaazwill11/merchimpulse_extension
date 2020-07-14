@@ -6,12 +6,19 @@
 header {
     flex: 1;
     text-align: center;
-    padding: 12px;
+    padding: 1rem;
     font-size: 1.4rem;
     font-weight: bold;
     border-bottom: 0.5px solid white;
 }
 main {
     flex: 15;
-    padding: 10px;
+    padding: 1rem;
+}
+.back {
+    cursor: pointer;
+    z-index: 2;
+}
+.back:hover {
+    text-decoration: underline;
 }

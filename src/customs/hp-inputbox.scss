@@ -1,0 +1,10 @@
+.hp {
+    &.inp {
+        @extend .padding_5;
+        font-size: 1rem;
+        width: 200px;
+        color: $dark-color;
+        border: none;
+        border-radius: 4px;
+    }
+}

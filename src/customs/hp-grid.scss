@@ -37,8 +37,11 @@ $columns: 12;
 
     }
     &.col {
-        position: relative;
         height: 100%;
-        box-sizing: border-box;
+    }
+    @for $i from 1 to 100 {
+        &.col#{$i} {
+            height: percentage($i / 100);
+        }
     }
 }
