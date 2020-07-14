@@ -22,9 +22,6 @@ function Layout(props) {
 
   return (
     <div className="hp col flex-column">
-      {/* <header className="hp flex1 text-center padding1 font-size1_4 bold border-bottom_1">
-        Merch Impulse
-      </header> */}
       {noHeader ? '' : header}
       <main className="hp rel ">
         {props.children}

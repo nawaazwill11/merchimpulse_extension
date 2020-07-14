@@ -1,9 +1,5 @@
 .hp {
 
-    &.flex, &.flex-column {
-        
-    }
-
     &.flex {
         display: flex;
 
@@ -40,17 +36,10 @@
     }
 }
 
-.hp {
 // Text
-    // Center
+.hp {
     &.text-center {
         text-align: center;
     }
-
-// Flex
-    // Center
-    
-    // Left
-   
 }
 
