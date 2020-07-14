@@ -1,0 +1,43 @@
+@function delimeterValue($i) {
+
+    $sel: $i;
+
+    @if ($sel < 10) {
+        @return _#{$sel};
+    } @else if ($i < 100) {
+        $sel: floor($i / 10);
+        $dec: $i % 10;
+        @if ($dec != 0) {
+            @return #{$sel}_#{$dec};
+        }
+        @return $sel;
+    } @else if ($sel >= 100) {
+        @return $sel / 10;
+    }
+
+}
+
+@function propper($prop_list) {
+    $prop_string: "";
+
+    @each $prop in $prop_list {
+        $prop_string: unquote($prop_string + " " + $prop);
+    }
+
+    @return $prop_string;
+}
+
+@mixin generator($selectors, $props:null, $from: 1, $to: 100) {
+    @each $selector in $selectors {
+        @for $i from $from to $to + 1 {
+            &.#{$selector}#{delimeterValue($i)} {
+                $prop_string: "";
+
+                @if ($props) {
+                    $prop_string: propper($props);
+                }
+                #{$selector}: #{$i / 10}rem unquote($prop_string);
+            }
+        }
+    }
+}

@@ -20,19 +20,23 @@ function App(props) {
 
   const [state, setState] = useState('fresh');
   const [items, setItems] = useState({});
-  const [navigate, setNavigation] = (
-    useState({
-        history: [],
-        current: 0, // index
-        goBack: function () {
-          if (this.current) {
-            const back = this.history[this.current - 1];
-            this.current--;
-            setNavigation(back);
-          }
-        }
-      })
-  );
+  const [navigate, setNavigation] = useState({
+    history: [],
+    towards: function (to, from) {
+      this.history.push(from);
+      setState(to);
+      console.log(this.history);
+    },
+    back: function () {
+      let pos = this.history.length;
+      if (!pos) return;
+      --pos;
+      console.log(this.history[pos]);
+      const [back] = this.history.splice(--pos, 1);
+      setState(back);
+    }
+  });
+  console.log(navigate);
 
   useEffect(() => {
 
@@ -43,17 +47,17 @@ function App(props) {
   const child = function (state) {
 
     if (state === 'fresh')
-      return <Fresh navigate={navigate} setAppState={setState} />
+      return <Fresh navigate={navigate} />
 
     else if (state === 'login')
-      return <Login navigate={navigate} setAppState={setState} />
+      return <Login navigate={navigate} />
 
     else if (state === 'full' || state === 'expired')
       return <Main navigate={navigate} type={state} />
 
     else return <Error />
   };
-
+  console.log(state);
   return (
     child(state)
   );

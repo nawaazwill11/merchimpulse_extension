@@ -1,0 +1,23 @@
+.hp {
+    // border
+    $border: ("border", "border-bottom", "border-top", "border-left", "border-right");
+    // border-radius
+    $border-radius: (
+        "border-radius",
+        "border-radius-bottom",
+        "border-radius-top",
+        "border-radius-left",
+        "border-radius-right"
+    );
+
+    @include generator($border, (solid, $primary));
+    @include generator($border-radius);
+
+    &.underline {
+        text-decoration: underline;
+    }
+    &.no-underline {
+        text-decoration: none;
+    }
+}
+

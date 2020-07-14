@@ -5,4 +5,10 @@
     &.rel {
         position: relative;
     }
+
+    $position: (
+        "bottom", "top", "left", "right"
+    );
+
+    @include generator($position, null, -100);
 }

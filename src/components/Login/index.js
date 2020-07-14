@@ -4,13 +4,11 @@ import { Layout } from '../Layout';
 
 function Login(props) {
 
-    const setAppState = props.setAppState;
-
     return (
         <Layout navigate={props.navigate}>
-            <div className="hp row col">
+            <div className="hp row col90 margin-top1_7">
                 <div className="hp col-na-12 col">
-                    <div className="hp col flex-column">
+                    <div className="hp col flex-column ">
                         {/* <div className="hp flex8">
                             <a className="hp font-size1">Create New Account</a>
                         </div> */}
@@ -28,6 +26,11 @@ function Login(props) {
                             <div className="hp padding1">
                                 <button id="login" className="hp btn btn-primary">Sign In</button>
                             </div>
+                        </div>
+                         <div className="hp flex8 flex h-center v-center">
+                            <a href="#!" className="hp font-size1 border_1 padding1 bold">
+                                Create A New Account
+                            </a>
                         </div>
                     </div>
                 </div>

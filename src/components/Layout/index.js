@@ -1,28 +1,45 @@
 import React from 'react';
 import './styles.scss';
 
-
-function handleBackClick(navigate) {
-
-  navigate.goBack();
-
-}
-
 function Layout(props) {
 
-  return (
-    <div className="container">
-      <header>
-        Merch Impulse
+  const navigate = props.navigate;
+
+  const header = (
+    <React.Fragment>
+      <header className="hp flex h-center padding_5">
+        <img src="/logo.svg" alt="logo" />
       </header>
-      <main>
-        <div className="hp abs back padding1" onClick={(e) => handleBackClick(props.navigate)}>
-          Back
-        </div>
+      <div className="hp abs top3 left_0 padding1 back underline" onClick={(e) => handleBackClick(navigate)}>
+        Back
+      </div>
+    </React.Fragment>
+  );
+
+  
+
+  let noHeader = props.noheader || false;
+
+  return (
+    <div className="hp col flex-column">
+      {/* <header className="hp flex1 text-center padding1 font-size1_4 bold border-bottom_1">
+        Merch Impulse
+      </header> */}
+      {noHeader ? '' : header}
+      <main className="hp rel ">
         {props.children}
       </main>
     </div>
   );
+
+}
+
+
+function handleBackClick(navigate) {
+
+  console.log(navigate);
+
+  navigate.back();
 
 }
 
