@@ -1,71 +1,77 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
-import App  from './App/index';
+import App from './App/index';
 import * as serviceWorker from './serviceWorker';
 import channel from './util/channel';
 
 async function getStorageItems() {
 
-  return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
 
-    try {
-      const message = {
-        type: 'STORAGE_GET',
-        key: null
-      };
+        try {
+            const message = {
+                type: 'STORAGE_GET',
+                key: null
+            };
 
-      channel.sendMessage(message, function (response) {
+            const response = await channel.sendMessage(message);
 
-        if (!Object.keys(response).length) {
-          return resolve({
-            error: true
-          });
+            console.log(response);
+
+            if (!Object.keys(response).length) {
+                return resolve({
+                    error: true
+                });
+            }
+
+            return resolve({
+                items: response
+            });
         }
-      
-        return resolve({
-          items: response
-        });
-
-
-      });
-    }
-    catch (error) {
-      console.log(error);
-      return reject(error);
-    }
-  });
+        catch (error) {
+            console.log(error);
+            return reject(error);
+        }
+    });
 
 }
 
 (async function () {
 
-  let props = {};
+    let props = {};
 
-  try {
+    try {
 
-    const { error, items } = await getStorageItems();
+        const { error, items } = await getStorageItems();
 
-    if (error)
-      props.error = true;
+        if (error)
+            props.error = true;
 
-    else
-      props.items = items;
-  }
-  catch (error) {
-    props.error = true;
-  }
-  finally {
+        else
+            props.items = items;
+    }
+    catch (error) {
+        console.log(error);
+        props.error = true;
+    }
+    finally {
 
-    ReactDOM.render(
-      <React.StrictMode>
-        <App {...props} />
-      </React.StrictMode>,
-      document.getElementById('root')
-    )
-  }
+        ReactDOM.render(
+            <React.StrictMode>
+                <App {...props} />
+            </React.StrictMode>,
+            document.getElementById('root')
+        )
+    }
 })();
 
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <App  />
+//   </React.StrictMode>,
+//   document.getElementById('root')
+// )
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA

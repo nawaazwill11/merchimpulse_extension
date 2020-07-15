@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.scss';
-import { Error, Fresh, Login, Main } from '../components';
+import { Error, Base, Main, OM } from '../components';
 import { getAppState } from './sidekick';
 
 function App(props) {
@@ -18,48 +18,59 @@ function App(props) {
         3.1. Only View Bookmarks active
   */
 
-  const [state, setState] = useState('fresh');
-  const [items, setItems] = useState({});
-  const [navigate, setNavigation] = useState({
-    history: [],
-    towards: function (to, from) {
-      this.history.push(from);
-      setState(to);
-      console.log(this.history);
+  const [state, setState] = useState('base');
+  const [message, setMessage] = useState({});
+  const [data, setData] = useState({});
+
+  const app = {
+    state: {
+      get: state,
+      set: setState
     },
-    back: function () {
-      let pos = this.history.length;
-      if (!pos) return;
-      --pos;
-      console.log(this.history[pos]);
-      const [back] = this.history.splice(--pos, 1);
-      setState(back);
+    message: {
+      get: message,
+      set: setMessage
+    },
+    data: {
+      get: data,
+      set: setData
     }
-  });
-  console.log(navigate);
+  };
 
   useEffect(() => {
 
     getAppState(props, setState);
 
-  }, [state]);
+  }, [state, message, data]);
 
   const child = function (state) {
 
-    if (state === 'fresh')
-      return <Fresh navigate={navigate} />
+    if (state === 'base')
+      return <Base app={app}/>
 
-    else if (state === 'login')
-      return <Login navigate={navigate} />
+    // else if (state === 'login')
+    //   return <Login navigate={navigate} />
 
-    else if (state === 'full' || state === 'expired')
-      return <Main navigate={navigate} type={state} />
+    else if (state === 'main')
+      return <Main app={app} />
 
     else return <Error />
   };
-  console.log(state);
+
+  console.log(message);
+  
+  const overlay = function () {
+    if (message.name)
+      return <OM appState={{...app.state}} message={{...app.message}} />
+  }();
+
+  console.log(overlay);
+
   return (
-    child(state)
+    <React.Fragment>
+      {overlay}
+      {child(state)}
+    </React.Fragment>
   );
 }
 

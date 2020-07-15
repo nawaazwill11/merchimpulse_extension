@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { Layout } from '../Layout';
-
+import { Layout } from '../../Layout';
 
 function Login(props) {
 
@@ -24,7 +23,8 @@ function Login(props) {
                                     href="#! link">Forgot password?</a>
                             </div>
                             <div className="hp padding1">
-                                <button id="login" className="hp btn btn-primary">Sign In</button>
+                                <button id="login" className="hp btn btn-primary" 
+                                    onClick={(e) => handleLogin(props.app)} >Sign In</button>
                             </div>
                         </div>
                          <div className="hp flex8 flex h-center v-center">
@@ -39,5 +39,16 @@ function Login(props) {
     );
 
 }
+
+
+function handleLogin(app) {
+
+    app.message.set({
+        name: 'login',
+        nextState: 'main'
+    });
+
+}
+
 
 export { Login }

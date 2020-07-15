@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles.scss';
-import { Layout } from '../Layout';
+import { Layout } from '../../Layout';
 
 
 function Fresh(props) {
