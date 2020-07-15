@@ -25,4 +25,11 @@
             }
         }
     }
+
+    &.flex-wrap {
+        flex-wrap: wrap;
+    }
+    &.flex-wrap-inverse {
+        flex-wrap: wrap-reverse;
+    }
 }

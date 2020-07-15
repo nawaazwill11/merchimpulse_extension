@@ -1,0 +1,40 @@
+.checkbox-container {
+    display: inline-block;
+    position: relative;
+    
+    label {
+        background-color: #aaa;
+        border: 1px solid #fff;
+        border-radius: 1.7rem;
+        display: inline-block;
+        position: relative;
+        transition: all 0.3s ease-out;
+        width: 2.7rem;
+        height: 1.56rem;
+        z-index: 2;
+
+        ::after {
+            content: ' ';
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 0.1rem;
+            left: 1px;
+            transform: translateX(0);
+            transition: transform 0.3s linear;
+            width: 1.2rem;
+            height: 1.2rem;
+            /* z-index: 3; */
+        }
+    }
+    input {
+        visibility: hidden;
+        position: absolute;
+    }
+    input:checked + label + .active-circle {
+        transform: translate(-50%, -50%) scale(30);
+    }
+    input:checked + label::after {
+        transform: translateX(calc(100% + 0.5px));
+    }
+}

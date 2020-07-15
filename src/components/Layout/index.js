@@ -5,24 +5,31 @@ function Layout(props) {
 
   const navigate = props.navigate;
 
-  const header = (
-    <React.Fragment>
-      <header className="hp flex h-center padding_5">
-        <img src="/logo.svg" alt="logo" />
-      </header>
+  const header_element = function (noback) {
+    
+    const back_element = (
       <div className="hp abs top3 left_0 padding1 back underline" onClick={(e) => handleBackClick(navigate)}>
-        Back
+          Back
       </div>
-    </React.Fragment>
-  );
+    );
 
-  
+    const back = noback ? '' : back_element;
+    
+    return (
+      <React.Fragment>
+        <header className="hp flex h-center padding_5">
+          <img src="/logo.svg" alt="logo" />
+        </header>
+        {back}
+      </React.Fragment>
+    );
+  }(props.noback);
 
-  let noHeader = props.noheader || false;
+  const header = props.noheader ? '' : header_element;
 
   return (
     <div className="hp col flex-column">
-      {noHeader ? '' : header}
+      {header}
       <main className="hp rel ">
         {props.children}
       </main>
