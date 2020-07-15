@@ -10,6 +10,7 @@
         min-width: 100px;
         background-color: white;
         color: $dark-color;
+        cursor: pointer;
     }
     .btn-primary {
         @extend .primary-contrast;

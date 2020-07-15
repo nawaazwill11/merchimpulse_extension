@@ -19,7 +19,7 @@ function App(props) {
   */
 
   const [state, setState] = useState('base');
-  const [message, setMessage] = useState({name: 'login'});
+  const [message, setMessage] = useState({});
   const [data, setData] = useState({});
 
   const app = {
