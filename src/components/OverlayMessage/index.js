@@ -1,4 +1,6 @@
 import React from 'react';
+import './styles.scss';
+
 
 function OverlayMessage(props) {
 
@@ -12,13 +14,17 @@ function OverlayMessage(props) {
             'Please Buy our subscription to keep using,' +
             'Merch Impulse',
     };
-    alert()
 
     return (
-        <div id="message" className="hp row col abs top0 left0">
-
-            {message_def[message.get.name]}
-            <button onClick={(e) => handleClose(message, appState)}>Close</button>
+        <div id="message" className="hp row col abs top0 left0 flex v-center">
+            <div className="hp row col30 padding1 flex-column h-center v-center">
+                <div className="hp font-size1_5 margin-bottom1">
+                    {message_def[message.get.name]}
+                </div>
+                <div className="hp">
+                    <button className="hp btn btn-primary-inverse" onClick={(e) => handleClose(message, appState)}>Close</button>
+                </div>
+            </div>
         </div>
     );
 }

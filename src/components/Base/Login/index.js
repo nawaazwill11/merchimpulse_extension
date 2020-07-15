@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Layout } from '../../Layout';
+import { handleLogin } from './sidekick';
 
 function Login(props) {
 
@@ -37,16 +38,6 @@ function Login(props) {
             </div>
         </Layout>
     );
-
-}
-
-
-function handleLogin(app) {
-
-    app.message.set({
-        name: 'login',
-        nextState: 'main'
-    });
 
 }
 

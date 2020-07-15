@@ -17,4 +17,8 @@
     .btn-primary-inverse {
         @extend .primary-contrast-inverse;
     }
+    .btn-success {
+        background-color: #21be31;
+        color: white;
+    }
 }
