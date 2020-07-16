@@ -1,5 +1,16 @@
 .hp {
+    $font: (
+        "font-size"
+    );
+
+    @include generator($font);
+    
     &.bold {
         font-weight: bold;
+    }
+    &.ellipsis {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }

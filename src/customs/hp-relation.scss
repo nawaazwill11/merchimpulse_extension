@@ -1,10 +1,13 @@
 .hp {
-    $selectors: (
+    $padding: (
         "padding", "padding-bottom", "padding-top", "padding-left", "padding-right", 
+    );
+    $margin: (
         "margin", "margin-bottom", "margin-top", "margin-left", "margin-right", 
-        "font-size");
+    );
 
-    @include generator($selectors);
+    @include generator($padding);
+    @include generator($margin, null, -10);
     
     &.fit-content {
         width: fit-content;
