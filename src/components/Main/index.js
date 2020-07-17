@@ -36,7 +36,11 @@ function Main({ app }) {
             <Subscription state={state} />
             <div className="hp row col flex-column padding1">
                 <div className="hp row switch flex v-center margin-bottom1">
-                    <StatusBar state={state} active={{...main.active}} count={data.count} />
+                    <StatusBar 
+                        state={state} 
+                        active={{...main.active}} 
+                        count={data.count} 
+                        message={app.message} />
                 </div>
                 <div className="hp row flex flex1 h-center">
                     <Features {...main} />

@@ -8,7 +8,7 @@ function handleSwitchClick(checked) {
     return checked.set(!checked.get);
 }
 
-function StatusBar({ state, active, count }) {
+function StatusBar({ state, active, count, message }) {
 
     const [checked, setChecked] = useState(active.get);
 
@@ -40,20 +40,20 @@ function StatusBar({ state, active, count }) {
 
     const counts = function () {
 
-        if (state !== 'full') {
-            
-        }
         return (
             <div className="hp flex1 text-center font-size1_2">
                 {
-                    state === 'full' ? '' :
-                        `Searches left: ${count}`
+                    active.get 
+                        ?   state.get !== 'full' 
+                            ? `Searches left: ${count}`
+                            : ''
+                        : ''
                 }      
             </div>
         );
     }();
 
-    const logout = <Logout />;
+    const logout = <Logout message={message} />;
 
     return (
         <React.Fragment>

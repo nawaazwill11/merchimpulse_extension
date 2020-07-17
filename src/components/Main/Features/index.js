@@ -20,18 +20,22 @@ function Inactive({ type, active }) {
         inactive: function () {
             return (
                 <div className="hp flex-column h-center">
-                    <h1>Inactive</h1>
-                    <p>Click this to turn on</p>
-                    <CurvedArrow />        
+                    <div className="hp font-size2 bold margin-bottom_5">
+                        Inactive
+                    </div>
+                    <div className="hp font-size1">
+                        Click this to turn on
+                    </div>
+                    <CurvedArrow />
                 </div>
             );
-            
+
         }()
     };
 
 
     return (
-        <div className="hp row">
+        <div className="hp row flex h-center v-center">
             {show[type]}
         </div>
     );

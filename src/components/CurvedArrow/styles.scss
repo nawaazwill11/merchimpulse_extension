@@ -2,8 +2,8 @@
     position: absolute;
     margin: 0 auto;
     width: 100px;
-    top: -147px;
-    left: 23px
+    top: -5px;
+    left: 20px;
 }
 
 .arrow .curve {
@@ -12,34 +12,33 @@
     left: -1.5px;
     border: 2px dashed #be5f4b;
     border-color: transparent transparent transparent #be5f4b;
-    height: 280px;
+    height: 271px;
     width: 1200px;
-    border-radius: 0px 0 0 150px;
+    border-radius: 0px 0 0 135px;
 }
 
 .arrow .point {
     position: absolute;
     /* left: 40px; */
     top: 0;
-
 }
 
 .arrow .point:before,
 .arrow .point:after {
     border: 1px dashed #be5f4b;
-    height: 25px;
+    height: 20px;
     content: "";
     position: absolute;
 }
 
 .arrow .point:before {
     top: -11px;
-    left: -11px;
+    left: -9px;
     transform: rotate(-138deg);
 }
 
 .arrow .point:after {
     top: -11px;
-    left: 8px;
+    left: 6px;
     transform: rotate(-42deg);
 }

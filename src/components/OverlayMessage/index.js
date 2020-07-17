@@ -18,7 +18,7 @@ function OverlayMessage(props) {
     return (
         <div id="message" className="hp row col abs top0 left0 flex v-center">
             <div className="hp row col30 padding1 flex-column h-center v-center">
-                <div className="hp font-size1_5 margin-bottom1">
+                <div className="hp font-size1_5 margin-bottom1 text-center">
                     {message_def[message.get.name]}
                 </div>
                 <div className="hp">

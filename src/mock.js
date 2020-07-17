@@ -1,6 +1,6 @@
 export const data = {
     active: false,
-    state: 'full',
+    state: 'base',
     count: 3,
     filter: 'Popsocket',
     bookmarks: [
