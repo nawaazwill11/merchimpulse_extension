@@ -2,11 +2,11 @@
     $padding: (
         "padding", "padding-bottom", "padding-top", "padding-left", "padding-right", 
     );
+    @include generator($padding, null, 0);
+
     $margin: (
         "margin", "margin-bottom", "margin-top", "margin-left", "margin-right", 
     );
-
-    @include generator($padding, null, 0);
     @include generator($margin, null, -10);
     
     &.fit-content {

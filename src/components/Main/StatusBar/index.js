@@ -3,12 +3,14 @@ import './styles.scss';
 import { Logout } from '../Logout';
 
 
-function handleSwitchClick(checked) {
+function handleSwitchClick(subs, checked) {
+
+    if (subs === 'expired') return '';
 
     return checked.set(!checked.get);
 }
 
-function StatusBar({ state, active, count, message }) {
+function StatusBar({ subs, state, active, count, message }) {
 
     const [checked, setChecked] = useState(active.get);
 
@@ -31,7 +33,7 @@ function StatusBar({ state, active, count, message }) {
                 <div className="checkbox-container yellow">
                     <input type="checkbox" id="toggle" className="toggle" checked={checked} />
                     <label htmlFor="toggle" className={active_class} 
-                        onClick={(e) => {handleSwitchClick(status_bar.checked)}}></label>
+                        onClick={(e) => {handleSwitchClick(subs, status_bar.checked)}}></label>
                     <div className="active-circle"></div>
                 </div>
             </div>
@@ -44,7 +46,7 @@ function StatusBar({ state, active, count, message }) {
             <div className="hp flex1 text-center font-size1_2">
                 {
                     active.get 
-                        ?   state.get !== 'full' 
+                        ?   state !== 'full' 
                             ? `Searches left: ${count}`
                             : ''
                         : ''

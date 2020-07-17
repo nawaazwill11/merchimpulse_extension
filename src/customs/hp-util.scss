@@ -1,19 +1,47 @@
 @function delimeterValue($i) {
 
+    @if ($i == 0) {
+        @return $i;
+    }
+    
+    $neg: 0;
+    
+    @if ($i < 0) {
+        $neg: 1;
+        $i: $i * (-1);
+    }
     $sel: $i;
+    
+    $prefix: 0;
+    $dec: 0;
+
 
     @if ($sel < 10) {
-        @return _#{$sel};
-    } @else if ($i < 100) {
-        $sel: floor($i / 10);
-        $dec: $i % 10;
-        @if ($dec != 0) {
-            @return #{$sel}_#{$dec};
+        $prefix: 1;
+    } 
+    
+    @else {
+        $sel: floor($sel / 10);
+
+        @if ($i % 10 != 0) {
+            $dec: $i % 10;
+            
         }
-        @return $sel;
-    } @else if ($sel >= 100) {
-        @return $sel / 10;
+    } 
+    
+    @if ($neg == 1) {
+        $sel: $sel * (-1);
     }
+
+    @if ($prefix == 1) {
+        $sel: _#{$sel};
+    }
+
+    @if ($dec > 0) {
+        $sel: #{$sel}_#{$dec};
+    }
+
+    @return $sel;
 
 }
 

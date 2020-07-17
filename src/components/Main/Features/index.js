@@ -8,7 +8,7 @@ function Inactive({ type, active }) {
     const show = {
         expired: function () {
             return (
-                <div className="hp flex-column h-center">
+                <div className="hp flex-column h-center margin-bottom-4">
                     <h1>Expired</h1>
                     <a className="hp btn btn-primary"
                         href="#!">
@@ -19,7 +19,7 @@ function Inactive({ type, active }) {
         }(),
         inactive: function () {
             return (
-                <div className="hp flex-column h-center">
+                <div className="hp flex-column h-center margin-bottom_-4">
                     <div className="hp font-size2 bold margin-bottom_5">
                         Inactive
                     </div>
@@ -94,7 +94,7 @@ function Active({ selected_filter, data }) {
                     </div>
                 </div>
                 <div id="bookmark-list" className="hp row">
-                    <div className="hp row col padding_5 padding-top_0 padding-bottom_0">
+                    <div className="hp row col padding_5 padding-top0 padding-bottom0">
                         {bookmarks}
                     </div>
                 </div>
@@ -107,7 +107,7 @@ function Features({ data, state, active, selected_filter }) {
 
     if (state.get === 'expired' || !active.get) {
         return (
-            <Inactive type={state.get === 'expired' ? 'expired' : 'inactive'} active={active} />
+            <Inactive type={data.subs === 'expired' ? 'expired' : 'inactive'} active={active} />
         )
     }
 

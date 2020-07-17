@@ -1,6 +1,7 @@
 export const data = {
     active: false,
     state: 'base',
+    subs: 'trial',
     count: 3,
     filter: 'Popsocket',
     bookmarks: [
@@ -25,5 +26,4 @@ export const data = {
             age: 1594871505856,
         }
     ],
-    subs: 'trial'
 }

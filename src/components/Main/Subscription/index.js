@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.scss'
 
-function Subscription({ state }) {
+function Subscription({ subs }) {
 
     const messages = {
         trial: 'You are using a trial version',
@@ -10,7 +10,7 @@ function Subscription({ state }) {
 
     return (
         <div id="subscription" className="hp row text-center padding_1">
-            {messages[state]}
+            {messages[subs]}
         </div>
     );
 }

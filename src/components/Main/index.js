@@ -33,11 +33,12 @@ function Main({ app }) {
 
     return (
         <Layout noback={true}>
-            <Subscription state={state} />
-            <div className="hp row col flex-column padding1">
+            <Subscription subs={data.subs} />
+            <div className="hp row flex1 flex-column padding1">
                 <div className="hp row switch flex v-center margin-bottom1">
-                    <StatusBar 
-                        state={state} 
+                    <StatusBar
+                        subs={data.subs}
+                        state={state}
                         active={{...main.active}} 
                         count={data.count} 
                         message={app.message} />

@@ -6,7 +6,7 @@ function Layout({ navigate, noheader, noback, children }) {
   const header_element = function () {
 
     const back_element = (
-      <div className="hp abs top3 left_0 padding1 back underline" onClick={(e) => handleBackClick(navigate)}>
+      <div className="hp abs top3 left0 padding1 back underline" onClick={(e) => handleBackClick(navigate)}>
         Back
       </div>
     );
@@ -28,7 +28,7 @@ function Layout({ navigate, noheader, noback, children }) {
   return (
     <div className="hp col flex-column">
       {header}
-      <main className="hp rel flex1">
+      <main className="hp rel flex-column flex1">
         {children}
       </main>
     </div>
