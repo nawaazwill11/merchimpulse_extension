@@ -3,7 +3,7 @@ import './App.scss';
 import { Error, Base, Main, OM } from '../components';
 import { getAppState } from './sidekick';
 
-function App(props) {
+function App({app_data}) {
   /* 
     App has 3 main states:
       1. Fresh / logout
@@ -20,7 +20,7 @@ function App(props) {
 
   const [state, setState] = useState('main');
   const [message, setMessage] = useState({});
-  const [data, setData] = useState({});
+  const [data, setData] = useState(app_data);
 
   const app = {
     state: {
@@ -39,7 +39,7 @@ function App(props) {
 
   useEffect(() => {
 
-    getAppState(props, setState);
+    getAppState(app_data, setState);
 
   }, [state, message, data]);
 
@@ -52,12 +52,11 @@ function App(props) {
     //   return <Login navigate={navigate} />
 
     else if (state === 'main')
-      return <Main app={app} />
+      return <Main app={app} data={data} />
 
     else return <Error />
   };
 
-  console.log(message);
   
   const overlay = function () {
     if (message.name)

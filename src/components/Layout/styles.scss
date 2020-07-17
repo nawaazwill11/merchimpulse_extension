@@ -10,11 +10,28 @@ header {
         height: 2.4rem;
     }
 }
-main {
-    flex: 15;
-    padding: 1rem;
-}
 .back {
     cursor: pointer;
     z-index: 2;
+}
+
+// #trial {
+//     transform: rotate(-45deg);
+//     top: -8px;
+//     left: -30px;
+//     background: red;
+//     color: white;
+//     display: block;
+//     width: 90px;
+//     text-align: center;
+//     height: 40px;
+//     display: flex;
+//     justify-content: center;
+//     align-items: flex-end;
+//     padding-right: 1px;
+// }
+#trial {
+    background-color: white;
+    color: black;
+    padding: 2px;
 }

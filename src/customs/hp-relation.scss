@@ -6,7 +6,7 @@
         "margin", "margin-bottom", "margin-top", "margin-left", "margin-right", 
     );
 
-    @include generator($padding);
+    @include generator($padding, null, 0);
     @include generator($margin, null, -10);
     
     &.fit-content {

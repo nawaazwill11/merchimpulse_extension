@@ -1,20 +1,18 @@
 import React from 'react';
 import './styles.scss';
 
-function Layout(props) {
+function Layout({ navigate, noheader, noback, children }) {
 
-  const navigate = props.navigate;
+  const header_element = function () {
 
-  const header_element = function (noback) {
-    
     const back_element = (
       <div className="hp abs top3 left_0 padding1 back underline" onClick={(e) => handleBackClick(navigate)}>
-          Back
+        Back
       </div>
     );
 
     const back = noback ? '' : back_element;
-    
+
     return (
       <React.Fragment>
         <header className="hp flex h-center padding_5">
@@ -23,15 +21,15 @@ function Layout(props) {
         {back}
       </React.Fragment>
     );
-  }(props.noback);
+  }();
 
-  const header = props.noheader ? '' : header_element;
+  const header = noheader ? '' : header_element;
 
   return (
     <div className="hp col flex-column">
       {header}
-      <main className="hp rel ">
-        {props.children}
+      <main className="hp rel flex1">
+        {children}
       </main>
     </div>
   );
