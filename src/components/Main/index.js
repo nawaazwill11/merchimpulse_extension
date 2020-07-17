@@ -14,7 +14,7 @@ const filter_list = [
     'Premium',
 ];
 
-function Trial(props) {
+function Trial() {
 
     return (
         <div id="trial" className="hp row text-center padding_1">
@@ -101,43 +101,6 @@ function Main({ data, _selected_filter }) {
                         <div id="bookmark-list" className="hp row">
                             <div className="hp row col">
                                 {bookmarks}
-                                {/* <div className="hp row font-size_8 padding-top_4 padding-bottom_4 flex v-center">
-                                    <div className="hp flex4 ellipsis" title="Ginchillaasdasdasd">Ginchillaasdasdasd</div>
-                                    <div className="hp flex3 text-center">1 day ago</div>
-                                    <div className="hp flex1 text-center">
-                                        <a href="#!">
-                                            <img className="small-icon" src="/out.svg" alt="out" />
-                                        </a>
-                                    </div>
-                                </div>
-                                <div className="hp row font-size_8 padding-top_4 padding-bottom_4 flex v-center">
-                                    <div className="hp flex4 ellipsis" title="Ginchillaasdasdasd">Ginchillaasdasdasd</div>
-                                    <div className="hp flex3 text-center">1 day ago</div>
-                                    <div className="hp flex1 text-center">
-                                        <img className="small-icon" src="/out.svg" alt="out" />
-                                    </div>
-                                </div>
-                                <div className="hp row font-size_8 padding-top_4 padding-bottom_4 flex v-center">
-                                    <div className="hp flex4 ellipsis" title="Ginchillaasdasdasd">Ginchillaasdasdasd</div>
-                                    <div className="hp flex3 text-center">1 day ago</div>
-                                    <div className="hp flex1 text-center">
-                                        <img className="small-icon" src="/out.svg" alt="out" />
-                                    </div>
-                                </div>
-                                <div className="hp row font-size_8 padding-top_4 padding-bottom_4 flex v-center">
-                                    <div className="hp flex4 ellipsis" title="Ginchillaasdasdasd">Ginchillaasdasdasd</div>
-                                    <div className="hp flex3 text-center">1 day ago</div>
-                                    <div className="hp flex1 text-center">
-                                        <img className="small-icon" src="/out.svg" alt="out" />
-                                    </div>
-                                </div>
-                                <div className="hp row font-size_8 padding-top_4 padding-bottom_4 flex v-center">
-                                    <div className="hp flex4 ellipsis" title="Ginchillaasdasdasd">Ginchillaasdasdasd</div>
-                                    <div className="hp flex3 text-center">1 day ago</div>
-                                    <div className="hp flex1 text-center">
-                                        <img className="small-icon" src="/out.svg" alt="out" />
-                                    </div>
-                                </div> */}
                             </div>
                         </div>
                     </div>

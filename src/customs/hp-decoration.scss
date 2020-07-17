@@ -19,5 +19,8 @@
     &.no-underline {
         text-decoration: none;
     }
+    &.divider {
+        border: 1px solid $primary;
+    }
 }
 

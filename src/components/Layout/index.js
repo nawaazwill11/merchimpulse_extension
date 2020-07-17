@@ -11,14 +11,14 @@ function Layout({ navigate, noheader, noback, children }) {
       </div>
     );
 
-    const back = noback ? '' : back_element;
+    const back = noback ? '' : 'back_element';
 
     return (
       <React.Fragment>
         <header className="hp flex h-center padding_5">
           <img src="/logo.svg" alt="logo" />
         </header>
-        {back}
+        {/* {back} */}
       </React.Fragment>
     );
   }();

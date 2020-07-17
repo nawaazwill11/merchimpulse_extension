@@ -1,8 +1,8 @@
 .hp {
     &.inp {
-        @extend .padding_5;
+        @extend .padding_7;
         font-size: 1rem;
-        width: 200px;
+        width: calc(100% - 1.7rem);
         color: $dark-color;
         border: none;
         border-radius: 4px;

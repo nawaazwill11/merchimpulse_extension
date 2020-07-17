@@ -18,7 +18,7 @@ function App({app_data}) {
         3.1. Only View Bookmarks active
   */
 
-  const [state, setState] = useState('main');
+  const [state, setState] = useState('base');
   const [message, setMessage] = useState({});
   const [data, setData] = useState(app_data);
 
