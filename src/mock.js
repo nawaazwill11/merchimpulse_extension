@@ -1,4 +1,8 @@
 export const data = {
+    active: true,
+    state: 'trial',
+    count: 3,
+    filter: 'Popsocket',
     bookmarks: [
         {
             name: 'tshirt',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect } from 'react';
+import './styles.scss';
 
 
 function getAge(time) {

@@ -1,0 +1,8 @@
+.filter {
+    cursor: pointer;
+    
+    &.selected {
+        color: white;
+        background-color: #F57200;
+    }
+}

@@ -18,7 +18,7 @@ function App({app_data}) {
         3.1. Only View Bookmarks active
   */
 
-  const [state, setState] = useState('base');
+  const [state, setState] = useState('main');
   const [message, setMessage] = useState({});
   const [data, setData] = useState(app_data);
 
@@ -52,7 +52,7 @@ function App({app_data}) {
     //   return <Login navigate={navigate} />
 
     else if (state === 'main')
-      return <Main app={app} data={data} />
+      return <Main app={app} />
 
     else return <Error />
   };

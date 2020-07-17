@@ -1,0 +1,110 @@
+import React from 'react';
+import { Filter } from '../Filter';
+import { Bookmark } from '../Bookmark';
+
+function Inactive({ type }) {
+
+    const show = {
+        expired: function () {
+            return (
+                <div className="hp flex-column h-center">
+                    <h1>Expired</h1>
+                    <button>Buy subscription</button>
+                </div>
+            );
+        }(),
+        inactive: function () {
+            return (
+                <div className="hp flex-column h-center">
+                    <h1>Inactive</h1>
+                    <button>Activate</button>
+                </div>
+            );
+        }()
+    };
+
+
+    return (
+        <div className="hp row">
+            {show[type]}
+        </div>
+    );
+}
+
+function Active({ selected_filter, data }) {
+
+    const filter_list = [
+        'T-Shirt',
+        'Popsocket',
+        'Sweatshirt',
+        'Longsleeves',
+        'Premium',
+    ];
+
+    const filters = filter_list.map((filter) => {
+
+        const isSelected = filter === selected_filter.get;
+
+        return (
+            <div key={filter} className="hp row col-na-6 padding_5">
+                <Filter selected={isSelected || false}
+                    name={filter} selected_filter={selected_filter} />
+            </div>
+        );
+    });
+
+    const bookmarks = data.bookmarks.map((bookmark) => {
+        return <Bookmark key={bookmark} bookmark={bookmark} />
+    });
+
+    return (
+        <div className="hp row flex24 flex-column">
+            <div className="hp row flex1">
+                <div className="hp row bold padding-bottom_5 font-size1">
+                    Always-on Filters
+                        </div>
+                <div className="hp row flex flex-wrap h-center font-size_6">
+                    {filters}
+                </div>
+            </div>
+            <div className="hp row flex1 flex-column margin-bottom_-5">
+                <div className="hp row">
+                    <div className="row col-na-6">
+                        <div className="hp bold inline font-size1">
+                            Bookmark&nbsp;
+                                </div>
+                        <p id="bookmark-count" className="hp font-size_6 inline">
+                            ({data.bookmarks.length})
+                                </p>
+                    </div>
+                    <div className="hp row col-na-6 text-right underline">
+                        <a href="#!">
+                            Manage
+                                </a>
+                    </div>
+                </div>
+                <div id="bookmark-list" className="hp row">
+                    <div className="hp row col padding_5 padding-top_0 padding-bottom_0">
+                        {bookmarks}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function Features({ data, state, active, selected_filter }) {
+
+    if (state.get === 'expired' || !active.get) {
+        return (
+            <Inactive type={state.get === 'expired' ? 'expired' : 'inactive'} />
+        )
+    }
+
+    return (
+        <Active selected_filter={selected_filter} data={data} />
+    )
+
+}
+
+export { Features }

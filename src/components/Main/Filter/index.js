@@ -1,15 +1,15 @@
 import React from 'react';
-
+import './styles.scss';
 /**
  * @param  {Boolean} {selected}
  * @returns  {ReactDOM} 
  */
 
-function Filter({ name, selected, main_filter }) {
+function Filter({ name, selected, selected_filter }) {
 
     return (
         <div className={"hp row col-na-12 border_1 padding_5 text-center filter " + (selected ? 'selected' : '')}
-            onClick={(e) => handleClick(name, main_filter)}>
+            onClick={(e) => handleClick(name, selected_filter)}>
             {name}
         </div>
     );
@@ -23,11 +23,11 @@ function Filter({ name, selected, main_filter }) {
  */
 
 
-function handleClick(name, main_filter) {
+function handleClick(name, selected_filter) {
     
     // add to filter name to local storage //
 
-    main_filter.set(name);
+    selected_filter.set(name);
 
 }
 
