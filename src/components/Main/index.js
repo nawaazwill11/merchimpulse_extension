@@ -73,7 +73,7 @@ function Main({ data, _selected_filter }) {
                         <img className="small-icon" src="/logout.svg" alt="logout" />
                     </div>
                 </div>
-                <div className="hp row flex24 flex-column padding2 padding-top_0">
+                <div className="hp row flex24 flex-column padding1 padding-top_0">
                     <div className="hp row flex8">
                         <div className="hp row bold padding-bottom_5 font-size1">
                             Always-on Filters
@@ -99,7 +99,7 @@ function Main({ data, _selected_filter }) {
                             </div>
                         </div>
                         <div id="bookmark-list" className="hp row">
-                            <div className="hp row col">
+                            <div className="hp row col padding_5 padding-top_0 padding-bottom_0">
                                 {bookmarks}
                             </div>
                         </div>

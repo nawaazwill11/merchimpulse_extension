@@ -6,7 +6,7 @@ function Login(props) {
 
     return (
         <Layout navigate={props.navigate}>
-            <div className="hp row col90 margin-top1_7">
+            <div className="hp row col94 margin-top1_7">
                 <div className="hp col-na-12 col">
                     <div className="hp col flex-column ">
                         {/* <div className="hp flex8">
@@ -29,7 +29,7 @@ function Login(props) {
                             </div>
                         </div>
                         <div className="hp divider margin-left1 margin-right1"></div>
-                         <div className="hp flex8 flex h-center v-center">
+                         <div className="hp flex8 flex h-center v-center padding1">
                             <p href="#!" className="hp font-size1 border_1 padding1 bold">
                                 Create A New Account
                             </p>
