@@ -1,15 +1,19 @@
 import React from 'react';
 import { Filter } from '../Filter';
 import { Bookmark } from '../Bookmark';
+import { CurvedArrow } from '../../CurvedArrow';
 
-function Inactive({ type }) {
+function Inactive({ type, active }) {
 
     const show = {
         expired: function () {
             return (
                 <div className="hp flex-column h-center">
                     <h1>Expired</h1>
-                    <button>Buy subscription</button>
+                    <a className="hp btn btn-primary"
+                        href="#!">
+                        Buy subscription
+                    </a>
                 </div>
             );
         }(),
@@ -17,9 +21,11 @@ function Inactive({ type }) {
             return (
                 <div className="hp flex-column h-center">
                     <h1>Inactive</h1>
-                    <button>Activate</button>
+                    <p>Click this to turn on</p>
+                    <CurvedArrow />        
                 </div>
             );
+            
         }()
     };
 
@@ -97,7 +103,7 @@ function Features({ data, state, active, selected_filter }) {
 
     if (state.get === 'expired' || !active.get) {
         return (
-            <Inactive type={state.get === 'expired' ? 'expired' : 'inactive'} />
+            <Inactive type={state.get === 'expired' ? 'expired' : 'inactive'} active={active} />
         )
     }
 

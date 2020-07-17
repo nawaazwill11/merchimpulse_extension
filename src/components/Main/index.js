@@ -38,7 +38,7 @@ function Main({ app }) {
                 <div className="hp row switch flex v-center margin-bottom1">
                     <StatusBar state={state} active={{...main.active}} count={data.count} />
                 </div>
-                <div className="hp row flex flex1 h-center v-center">
+                <div className="hp row flex flex1 h-center">
                     <Features {...main} />
                 </div>
             </div>

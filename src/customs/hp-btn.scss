@@ -12,6 +12,7 @@
         color: $dark-color;
         cursor: pointer;
         font-size: 1rem;
+        text-align: center;
     }
     .btn-primary {
         @extend .primary-contrast;
