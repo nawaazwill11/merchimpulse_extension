@@ -83,6 +83,7 @@
 		tab: '',
 		recent_filter: '',
 		error: false,
+		count: 0,
 	};
 
 	/**
@@ -94,6 +95,8 @@
 	const error_stack = [];
 
 	async function setToStorage(data) {
+
+		console.log(data);
 
 		return new Promise((resolve, reject) => {
 			try {
@@ -196,29 +199,30 @@
 
 	async function fetchUserInfo(data) {
 
-		const response_obj = await fetch('http://locahost:8000/api/ping', {
-			method: 'POST',
-			headers: new Headers({
-				'Authorization': 'Bearer ' + data.access_token
-			})
-		});
+		const response_obj = await fetch('http://localhost:8000/api/ping', {
+			method: "POST", 
+			headers: { 
+				"Authorization": data.auth_token 
+			}
+		})
 
 		const { error, payload } = await response_obj.json();
 		console.log(error, payload);
-		// if (error) {
-		// 	await setDefault();
-		// 	error_stack.push(error);
-		// 	setErrorState();
-		// }
-		// else {
-		// 	const { access_token, subs } = payload;
-		// 	const to_update = [];
-		// 	if (access_token !== data.access_token) {
-		// 		to_update.push({ access_token: access_token });
-		// 	}
-		// 	to_update.push({ subs: subs });
-		// 	setToStorage({ ...to_update });
-		// }
+		if (error) {
+			await setDefault();
+			error_stack.push(error);
+			setErrorState();
+		}
+		else {
+			const { access_token, subs, count } = payload;
+			const to_update = {};
+			if (payload.token_refreshed) {
+				to_update.push({ access_token: access_token });
+			}
+			to_update.subs = subs.type;
+			to_update.count =  subs.count;
+			setToStorage({ ...to_update });
+		}
 
 	}
 
@@ -235,7 +239,7 @@
 		}
 		catch (error) {
 			error_stack.push('Failed at initiate()\n' + error);
-			throw new Error();
+			setErrorState();
 		}
 	}
 
