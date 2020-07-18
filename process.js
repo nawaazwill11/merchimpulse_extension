@@ -1,16 +1,22 @@
-window.addEventListener('load', function () {
-	inject.insertContainer()
-		.then(() => {
-			alert('container inserted');
-			inject.appendScripts()
-		})
-});
+// window.addEventListener('load', function () {
+// 	inject.insertContainer()
+// 		.then(() => {
+// 			alert('container inserted');
+// 			inject.appendScripts()
+// 		})
+// });
 
 
 
 (async function () {
 
-	// used for trademark purposes
+	/**
+	 * Checks for trademark
+	 * 1. Watches for tmdn.org's search page.
+	 * 2. Extracts JSON data from the tradmark page
+	 * 3. Sends a message with the JSON data indicating the trademark of the search term
+	 * 4. Closes the tmdn.org's search page.
+	 */
 	function trademarkCheck() {
 
 		const regex = new RegExp('https://www.tmdn.org/tmview/api/search/*')
@@ -25,7 +31,12 @@ window.addEventListener('load', function () {
 		}
 	}
 
-	// applies filter
+	/**
+	 * Redirect the Amazon search page according the seletect filter.
+	 * 1. Matches the amazon search URL.
+	 * 2. Modifies the URL according to the corresponding filter.
+	 * 3. Redirect the page.
+	 */
 	function filterRedirect() {
 
 		const regex = new RegExp('https:\/\/www\.amazon\..*\/.*?.*=.*');
@@ -44,25 +55,27 @@ window.addEventListener('load', function () {
 						}
 					}
 				}
-			)
-
+			);
 		}
-
 	}
 
-	let trigger = false;
+	// let trigger = false;
 
-	const storage_keys = [
-		'auth_token',
-		'subs',
-		'state',
-		'bookmarks',
-		'tab',
-		'recent_filter',
-		'error',
-	];
+	// const storage_identifiers = [
+	// 	'auth_token',
+	// 	'subs',
+	// 	'state',
+	// 	'bookmarks',
+	// 	'tab',
+	// 	'recent_filter',
+	// 	'error',
+	// ];
 
-	const storage_key_def = {
+	/**
+	 * A definition of keys with default values 
+	 * that are required to run the app.
+	 */
+	const defaults = {
 		auth_token: '',
 		subs: false,
 		state: false,
@@ -72,19 +85,30 @@ window.addEventListener('load', function () {
 		error: '',
 	};
 
-	const keypairs = {};
+	/**
+	 * An array of required storage keys
+	 */
+	const storage_identifiers = Object.keys(defaults);
 
+	const keypairs = {};
+	
+	/**
+	 * Fetches keys from local storage and set un-assigned or
+	 * undefined keys to default values.
+	 */
 	function bookstrap() {
 
 		console.log('bootstrapping initiated');
 
 		return new Promise((resolve) => {
 
-			chrome.storage.sync.get(storage_keys, function (response) {
+			chrome.storage.sync.get(storage_identifiers, function (response) {
 
 				const undefined_keys = []; // stores keys unset in storage
 
-				storage_keys.forEach((key) => {
+				// checks keys from response against required keys
+				// adds un-assigned keys to undefined_keys array
+				storage_identifiers.forEach((key) => {
 					if (response[key] !== undefined) {
 						keypairs[key] = response[key]; // store values for later uses
 						return;
@@ -175,6 +199,4 @@ window.addEventListener('load', function () {
 		filterRedirect()
 		// initiate();
 	});
-
-
 })();

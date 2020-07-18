@@ -24,7 +24,7 @@ function Inactive({ type, active }) {
                         Inactive
                     </div>
                     <div className="hp font-size1">
-                        Click this to turn on
+                        Click this to activate
                     </div>
                     <CurvedArrow />
                 </div>
@@ -64,7 +64,7 @@ function Active({ selected_filter, data }) {
     });
 
     const bookmarks = data.bookmarks.map((bookmark) => {
-        return <Bookmark key={bookmark} bookmark={bookmark} />
+        return <Bookmark key={bookmark.name} bookmark={bookmark} />
     });
 
     return (

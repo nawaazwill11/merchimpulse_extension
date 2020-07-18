@@ -4,9 +4,9 @@ import './styles.scss';
 function CurvedArrow() {
 
     return (
-        <div class="arrow">
-            <div class="curve"></div>
-            <div class="point"></div>
+        <div className="arrow">
+            <div className="curve"></div>
+            <div className="point"></div>
         </div>
     );
 

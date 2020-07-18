@@ -31,7 +31,7 @@ function StatusBar({ subs, state, active, count, message }) {
         return (
             <div className="">
                 <div className="checkbox-container yellow">
-                    <input type="checkbox" id="toggle" className="toggle" checked={checked} />
+                    <input type="checkbox" id="toggle" className="toggle" defaultChecked={checked} />
                     <label htmlFor="toggle" className={active_class} 
                         onClick={(e) => {handleSwitchClick(subs, status_bar.checked)}}></label>
                     <div className="active-circle"></div>
@@ -46,7 +46,7 @@ function StatusBar({ subs, state, active, count, message }) {
             <div className="hp flex1 text-center font-size1_2">
                 {
                     active.get 
-                        ?   state !== 'full' 
+                        ?   subs !== 'full' 
                             ? `Searches left: ${count}`
                             : ''
                         : ''
