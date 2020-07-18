@@ -77,12 +77,12 @@
 	 */
 	const defaults = {
 		auth_token: '',
-		subs: false,
-		state: false,
+		subs: '',
+		state: 'base',
 		bookmarks: [],
 		tab: '',
 		recent_filter: '',
-		error: '',
+		error: false,
 	};
 
 	/**
@@ -90,8 +90,56 @@
 	 */
 	const storage_identifiers = Object.keys(defaults);
 
-	const keypairs = {};
-	
+	const data = {};
+	const error_stack = [];
+
+	async function setToStorage(data) {
+
+		return new Promise((resolve, reject) => {
+			try {
+				chrome.storage.sync.set(data, () => resolve());
+			}
+			catch (error) {
+				error_stack.push('Failed at setToStorage():\n', error);
+				reject();
+			}
+		});
+	}
+
+	async function setDefault(keys) {
+
+		return new Promise(async (resolve, reject) => {
+
+			try {
+				const to_default = (
+					!keys
+						? defaults
+						: (
+							keys.reduce((keys_object, key) => {
+								keys_object[key] = defaults[key]
+								return keys_object;
+							}, {})
+						)
+				);
+
+				await setToStorage(to_default);
+				resolve();
+			}
+			catch (error) {
+				error_stack.push('Failed at setDefault()\n' + error);
+				reject();
+			}
+		});
+	}
+
+
+	function setErrorState() {
+		error_stack.forEach((error) => {
+			console.log(error);
+		});
+		setToStorage({ error: true });
+	}
+
 	/**
 	 * Fetches keys from local storage and set un-assigned or
 	 * undefined keys to default values.
@@ -99,104 +147,107 @@
 	function bookstrap() {
 
 		console.log('bootstrapping initiated');
+		return new Promise(async (resolve, reject) => {
 
-		return new Promise((resolve) => {
+			try {
 
-			chrome.storage.sync.get(storage_identifiers, function (response) {
+				chrome.storage.sync.get(storage_identifiers, async function (response) {
 
-				const undefined_keys = []; // stores keys unset in storage
+					try {
 
-				// checks keys from response against required keys
-				// adds un-assigned keys to undefined_keys array
-				storage_identifiers.forEach((key) => {
-					if (response[key] !== undefined) {
-						keypairs[key] = response[key]; // store values for later uses
-						return;
+						const undefined_keys = []; // stores keys unset in storage
+
+						// checks keys from response against required keys
+						// adds un-assigned keys to undefined_keys array
+						storage_identifiers.forEach((key) => {
+							if (response[key] !== undefined) {
+								data[key] = response[key]; // store values for later uses
+								return;
+							}
+							data[key] = defaults[key];
+							undefined_keys.push(key); // add keys with undefined values
+						});
+
+						const finishBootstrapping = function (state) {
+							console.log('bootstrapping finished');
+							resolve(state);
+						};
+
+						// if all key-value are defined, end bootstrap
+						if (undefined_keys.length)
+							// set values of each key with undefined value
+							await setDefault(undefined_keys);
+						return finishBootstrapping(data);
 					}
-					undefined_keys.push(key); // add keys with undefined values
+					catch (error) {
+						error_stack.push('Failed at bootstrap:promise\n' + error);
+						setErrorState();
+					}
 				});
 
-				const finishBootstrapping = function (state) {
-					console.log('bootstrapping finished');
-					resolve(state);
-				};
-
-				// if all key-value are defined, end bootstrap
-				if (!undefined_keys.length) finishBootstrapping(keypairs);
-
-				// set values of each key with undefined value
-				undefined_keys.forEach((key) => {
-					chrome.storage.sync.set({ [key]: storage_key_def[key] }, function () {
-						// end when all keys are set
-						if (key === undefined_keys[undefined_keys.length - 1])
-							finishBootstrapping(keypairs);
-					});
-				});
-
-			});
+			}
+			catch (error) {
+				error_stack.push('Failed at bootstrap()\n' + error);
+				reject();
+			}
 		});
 	}
 
 
-	function hasError(error) {
+	async function fetchUserInfo(data) {
 
+		const response_obj = await fetch('http://locahost:8000/api/ping', {
+			method: 'POST',
+			headers: new Headers({
+				'Authorization': 'Bearer ' + data.access_token
+			})
+		});
+
+		const { error, payload } = await response_obj.json();
+		console.log(error, payload);
+		// if (error) {
+		// 	await setDefault();
+		// 	error_stack.push(error);
+		// 	setErrorState();
+		// }
+		// else {
+		// 	const { access_token, subs } = payload;
+		// 	const to_update = [];
+		// 	if (access_token !== data.access_token) {
+		// 		to_update.push({ access_token: access_token });
+		// 	}
+		// 	to_update.push({ subs: subs });
+		// 	setToStorage({ ...to_update });
+		// }
 
 	}
 
-
-	function logout(error) {
-		chrome.storage.sync.set({ error: error })
-		chrome.storage.sync.set({ auth_token: '' })
-	}
-
-	function handleError(error) {
-		console.log(error);
-	}
-	function invalidSubs() {
-		console.log('invalid subscription');
-	}
-	function updateToken() {
-		// update token in storage
-		console.log('token updated');
-	}
 
 	async function initiate() {
-		const keypairs = await bookstrap();
+		try {
 
-		if (keypairs.error) 
-			return hasError(keypairs.error);
-
-		if (!keypairs.state) return handleError('App Inactive');
-		if (!keypairs.auth_token) return handleError('Unauthenticated');
-
-		const response_obj = await(
-			fetch('http://localhost:8000/api/ping', {
-				method: 'POST',
-				headers: {
-					Authorization: keypairs.auth_token
-				}
-			})
-		);
-		const response = await response_obj.json();
-
-		if (response.error)
-			return logout(error);
-
-		if (response.refreshed)
-			updateToken(response.token);
-
-		if (!response.subs)
-			return invalidSubs();
-
-
-		await inject.insertContainer();
-		inject.appendScripts();
+			const data = await bookstrap();
+			if (data.auth_token) {
+				await fetchUserInfo(data);
+			}
+			// await inject.insertContainer();
+			// inject.appendScripts();
+		}
+		catch (error) {
+			error_stack.push('Failed at initiate()\n' + error);
+			throw new Error();
+		}
 	}
 
 	// add window events
 	window.addEventListener('load', function (e) {
-		trademarkCheck();
-		filterRedirect()
-		// initiate();
+		try {
+			trademarkCheck();
+			filterRedirect()
+			initiate();
+		}
+		catch (error) {
+			setErrorState();
+		}
 	});
 })();

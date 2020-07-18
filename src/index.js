@@ -25,6 +25,9 @@ import { data } from './mock';
 //                     error: true
 //                 });
 //             }
+//             // IMPORTANT
+//             // check for data keys validity.
+//             // if not all are found, set default values.
 
 //             return resolve({
 //                 items: response

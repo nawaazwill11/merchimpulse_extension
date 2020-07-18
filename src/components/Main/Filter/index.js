@@ -8,7 +8,7 @@ import './styles.scss';
 function Filter({ name, selected, selected_filter }) {
 
     return (
-        <div className={"hp row col-na-12 border_1 padding_5 text-center filter " + (selected ? 'selected' : '')}
+        <div className={"hp row col-na-12 border_1 border-radius_2 padding_5 text-center filter " + (selected ? 'selected' : '')}
             onClick={(e) => handleClick(name, selected_filter)}>
             {name}
         </div>

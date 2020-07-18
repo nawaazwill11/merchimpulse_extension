@@ -29,24 +29,32 @@ const inject = function () {
         }
 
         function appendScripts() {
-            
-            const head = document.head;
-            
-            const stylesheet = document.createElement('link');
-            stylesheet.href = chrome.extension.getURL('merchui/static/css/style.css');
-            stylesheet.rel = 'stylesheet';
-            head.append(stylesheet);
 
-            const scripts = ['script0.js', 'script1.js', 'script2.js'];
-            const path = 'merchui/static/js/';
+            return new Promise((resolve, reject) => {
 
-            scripts.forEach(( script ) => {
-                const script_el = document.createElement('script');
-                script_el.type = 'text/javascript'; 
-                script_el.src = chrome.extension.getURL(path + script);
-                head.append(script_el);
+                try {
+    
+                    const head = document.head;        
+                    const stylesheet = document.createElement('link');
+                    stylesheet.href = chrome.extension.getURL('merchui/static/css/style.css');
+                    stylesheet.rel = 'stylesheet';
+                    head.append(stylesheet);
+        
+                    const scripts = ['script0.js', 'script1.js', 'script2.js'];
+                    const path = 'merchui/static/js/';
+        
+                    scripts.forEach(( script ) => {
+                        const script_el = document.createElement('script');
+                        script_el.type = 'text/javascript'; 
+                        script_el.src = chrome.extension.getURL(path + script);
+                        head.append(script_el);
+                    });
+                    resolve();
+                }
+                catch (error) {
+                    reject(error);
+                }
             });
-
         }
         
     

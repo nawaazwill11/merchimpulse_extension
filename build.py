@@ -2,14 +2,17 @@ import os
 import shutil
 
 def addBGScript():
-    bg_script = '/home/walker/workspace/projects/merch_complete/background.js'
+    scripts = [
+        '/home/walker/workspace/projects/mi_ext_view/background.js',
+        '/home/walker/workspace/projects/mi_ext_view/inject.js',
+        '/home/walker/workspace/projects/mi_ext_view/process.js',
+    ]
+    
     build_dir = os.getcwd() + '/build'
 
-    if not (os.path.exists(bg_script)):
-
-        return False
+    for script in scripts:
+        shutil.copy(script, build_dir)
     
-    shutil.copy(bg_script, build_dir)
     return True
 
 print('Added background script' if addBGScript() else 'Background script not added')
