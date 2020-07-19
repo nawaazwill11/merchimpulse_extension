@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.scss';
 import { Error, Base, Main, OM } from '../components';
-import { getAppState } from './sidekick';
 
 function App({app_data}) {
   /* 
@@ -37,11 +36,6 @@ function App({app_data}) {
     }
   };
 
-  useEffect(() => {
-
-    getAppState(app_data, setState);
-
-  }, [state, message, data]);
 
   const child = function (state) {
 
@@ -60,7 +54,7 @@ function App({app_data}) {
   
   const overlay = function () {
     if (message.header || message.body)
-      return <OM appState={{...app.state}} appMessage={{...app.message}} />
+      return <OM app_state={{...app.state}} app_message={{...app.message}} />
   }();
 
   console.log(overlay);

@@ -39,7 +39,7 @@ function Main({ app }) {
                         subs={app_data.subs}
                         main_active={main.active} 
                         count={app_data.count} 
-                        appMessage={app.message} />
+                        app_message={app.message} />
                 </div>
                 <div className="hp row flex flex1 h-center">
                     <Features main={main} app_data={app_data} />

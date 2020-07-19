@@ -50,6 +50,13 @@ export const message_def = {
         expired: 'Your free trial is over,' +
             'Please Buy our subscription to keep using,' +
             'Merch Impulse',
+    },
+    logout: function () {
+        return {
+            header: 'Logged out',
+            bg: "#F57200",
+            nextState: 'base'
+        }
     }
-    
+
 };

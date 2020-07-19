@@ -1,23 +1,30 @@
 import React from 'react';
 import './styles.scss';
 
-function OverlayMessage({ appMessage, appState }) {
+function OverlayMessage({ app_message, app_state }) {
+
+    const header = function (header) {
+        if (header)
+            return (
+                <div className="hp padding1 text-center font-size1_5 bold border-radius_2"
+                    style={{ backgroundColor: app_message.get.bg }}>
+                    {app_message.get.header}
+                </div>
+            );
+    }(app_message.get.header)
 
     return (
         <div id="message" className="hp row col abs top0 left0 flex v-center">
             <div className="hp row col70 padding1 flex-column h-center v-center">
                 <div className="hp row font-size1 margin-bottom1 flex h-center">
                     <div className="hp row col-na-10">
-                        <div className="hp padding1 text-center font-size1_5 bold border-radius_2"
-                            style={{ backgroundColor: appMessage.get.bg }}>
-                            {appMessage.get.header}
-                        </div>
-                        {appMessage.get.body}
+                        {header}
+                        {app_message.get.body}
                     </div>
                 </div>
                 <div className="hp row flex h-center margin-top1">
                     <button className="hp col-na-6 btn btn-primary-inverse "
-                        onClick={(e) => handleClose(appMessage, appState)}>
+                        onClick={(e) => handleClose(app_message, app_state)}>
                         Close
                     </button>
                 </div>
@@ -26,14 +33,14 @@ function OverlayMessage({ appMessage, appState }) {
     );
 }
 
-function handleClose(appMessage, appState) {
+function handleClose(app_message, app_state) {
 
-    const nextState = appMessage.get.nextState;
+    const nextState = app_message.get.nextState;
 
     if (nextState) {
-        appState.set(nextState);
+        app_state.set(nextState);
     }
-    appMessage.set(false);
+    app_message.set(false);
 
 }
 
