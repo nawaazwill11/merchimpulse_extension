@@ -2,7 +2,7 @@ import { extension_id } from '../config/definitions';
 
 export default (function () {
 
-    function sendMessage(message, callback) {
+    function sendMessage(message) {
 
         return new Promise((resolve, reject) => {
 

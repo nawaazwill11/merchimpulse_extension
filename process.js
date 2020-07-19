@@ -1,12 +1,3 @@
-// window.addEventListener('load', function () {
-// 	inject.insertContainer()
-// 		.then(() => {
-// 			alert('container inserted');
-// 			inject.appendScripts()
-// 		})
-// });
-
-
 
 (async function () {
 
@@ -59,18 +50,6 @@
 		}
 	}
 
-	// let trigger = false;
-
-	// const storage_identifiers = [
-	// 	'auth_token',
-	// 	'subs',
-	// 	'state',
-	// 	'bookmarks',
-	// 	'tab',
-	// 	'recent_filter',
-	// 	'error',
-	// ];
-
 	/**
 	 * A definition of keys with default values 
 	 * that are required to run the app.
@@ -95,8 +74,6 @@
 	const error_stack = [];
 
 	async function setToStorage(data) {
-
-		console.log(data);
 
 		return new Promise((resolve, reject) => {
 			try {
@@ -149,7 +126,7 @@
 	 */
 	function bookstrap() {
 
-		console.log('bootstrapping initiated');
+		console.log('Bootstrapping initiated');
 		return new Promise(async (resolve, reject) => {
 
 			try {
@@ -172,7 +149,7 @@
 						});
 
 						const finishBootstrapping = function (state) {
-							console.log('bootstrapping finished');
+							console.log('Bootstrapping finished');
 							resolve(state);
 						};
 
@@ -199,35 +176,52 @@
 
 	async function fetchUserInfo(data) {
 
-		const response_obj = await fetch('http://localhost:8000/api/ping', {
-			method: "POST", 
-			headers: { 
-				"Authorization": data.auth_token 
-			}
-		})
+		try {
 
-		const { error, payload } = await response_obj.json();
-		console.log(error, payload);
-		if (error) {
-			await setDefault();
-			error_stack.push(error);
+			console.log('Pinging server initiated')
+	
+			const response_obj = await fetch('http://localhost:8000/api/ping', {
+				method: "POST", 
+				headers: { 
+					"Authorization": data.auth_token 
+				}
+			});
+
+			console.log('Pinging server complete');
+	
+			const { error, payload } = await response_obj.json();
+
+			if (error) {
+				console.log('Ping returned error:', error);
+				await setDefault();
+				error_stack.push(error);
+				setErrorState();
+			}
+			else {
+				console.log('Ping payload received:\n');
+				console.log(payload);
+
+				const { access_token, subs, count } = payload;
+				const to_update = {};
+
+				if (payload.token_refreshed) {
+					console.log('Token was refreshed')
+					to_update.push({ access_token: access_token });
+				}
+				console.log('Updating storage with payload');
+				to_update.subs = subs.type;
+				to_update.count =  subs.count;
+				setToStorage({ ...to_update });
+			}
+		}
+		catch (error) {
+			error_stack.push('Server ping failed\n' + error);
 			setErrorState();
 		}
-		else {
-			const { access_token, subs, count } = payload;
-			const to_update = {};
-			if (payload.token_refreshed) {
-				to_update.push({ access_token: access_token });
-			}
-			to_update.subs = subs.type;
-			to_update.count =  subs.count;
-			setToStorage({ ...to_update });
-		}
-
 	}
 
-
 	async function initiate() {
+
 		try {
 
 			const data = await bookstrap();

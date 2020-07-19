@@ -8,7 +8,11 @@ function OverlayMessage(props) {
     const appState = props.appState;
 
     const message_def = {
-        login: 'You are logged in!',
+        login: {
+            success: 'You are logged in!',
+            error: (errors) => {
+                return Array.from(Object.keys(errors)).join(<br />)}
+        },
         logout: 'You have been logged out',
         expired: 'Your free trial is over,' +
             'Please Buy our subscription to keep using,' +
