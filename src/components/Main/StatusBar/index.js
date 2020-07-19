@@ -12,6 +12,8 @@ function handleSwitchClick(subs, checked) {
 
 function StatusBar({ subs, main_active, count, app_message }) {
 
+    console.log(main_active.get);
+
     const [checked, setChecked] = useState(main_active.get);
 
     const status_bar = {
@@ -46,9 +48,9 @@ function StatusBar({ subs, main_active, count, app_message }) {
             <div className="hp flex1 text-center font-size1_2">
                 {
                     main_active.get 
-                        ?   subs !== 'full' 
-                            ? `Searches left: ${count}`
-                            : ''
+                        ?   subs === 'full' 
+                            ? ''
+                            : `Searches left: ${count}`
                         : ''
                 }      
             </div>

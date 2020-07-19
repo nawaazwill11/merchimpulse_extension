@@ -55,6 +55,7 @@
 	 * that are required to run the app.
 	 */
 	const defaults = {
+		active: false,
 		auth_token: '',
 		subs: '',
 		state: 'base',

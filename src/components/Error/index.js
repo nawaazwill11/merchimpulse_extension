@@ -9,11 +9,11 @@ function Error({ error }) {
         <div className="div hp row col">
             <div className="hp font-size1_5 padding1 margin-top2">
                 <div className="hp bold margin-bottom1">
-                    Could not load app</div>
+                    Could Not Load App</div>
                 {error}
             </div>
         </div>
-    )
+    );
 
 }
 
