@@ -9,14 +9,13 @@ import { StatusBar } from './StatusBar';
 
 function Main({ app }) {
 
-    const data = app.data.get;
+    const app_data = app.data.get;
 
-    const [active, setActive] = useState(data.active);
-    const [state, setState] = useState(data.state);
-    const [selected_filter, setSelectedFilter] = useState(data.filter);
+    const [active, setActive] = useState(app_data.active);
+    const [state, setState] = useState(app_data.state);
+    const [filter, setFilter] = useState(app_data.filter);
 
     const main = {
-        data: data,
         state: {
             get: state,
             set: setState
@@ -25,26 +24,25 @@ function Main({ app }) {
             get: active,
             set: setActive
         },
-        selected_filter: {
-            get: selected_filter,
-            set: setSelectedFilter
+        filter: {
+            get: filter,
+            set: setFilter
         }
     };
 
     return (
         <Layout noback={true}>
-            <Subscription subs={data.subs} />
+            <Subscription subs={app_data.subs} />
             <div className="hp row flex1 flex-column padding1">
                 <div className="hp row switch flex v-center margin-bottom1">
                     <StatusBar
-                        subs={data.subs}
-                        state={state}
-                        active={{...main.active}} 
-                        count={data.count} 
-                        message={app.message} />
+                        subs={app_data.subs}
+                        main_active={main.active} 
+                        count={app_data.count} 
+                        appMessage={app.message} />
                 </div>
                 <div className="hp row flex flex1 h-center">
-                    <Features {...main} />
+                    <Features main={main} app_data={app_data} />
                 </div>
             </div>
         </Layout >

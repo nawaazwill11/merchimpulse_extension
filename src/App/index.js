@@ -59,8 +59,8 @@ function App({app_data}) {
 
   
   const overlay = function () {
-    if (message.name)
-      return <OM appState={{...app.state}} message={{...app.message}} />
+    if (message.header || message.body)
+      return <OM appState={{...app.state}} appMessage={{...app.message}} />
   }();
 
   console.log(overlay);

@@ -3,7 +3,7 @@ import { Filter } from '../Filter';
 import { Bookmark } from '../Bookmark';
 import { CurvedArrow } from '../../CurvedArrow';
 
-function Inactive({ type, active }) {
+function Inactive({ type }) {
 
     const show = {
         expired: function () {
@@ -41,7 +41,7 @@ function Inactive({ type, active }) {
     );
 }
 
-function Active({ selected_filter, data }) {
+function Active({ main_filter, app_data }) {
 
     const filter_list = [
         'T-Shirt',
@@ -53,17 +53,17 @@ function Active({ selected_filter, data }) {
 
     const filters = filter_list.map((filter) => {
 
-        const isSelected = filter === selected_filter.get;
+        const isSelected = filter === main_filter.get;
 
         return (
             <div key={filter} className="hp row col-na-6 padding_5">
-                <Filter selected={isSelected || false}
-                    name={filter} selected_filter={selected_filter} />
+                <Filter isSelected={isSelected || false}
+                    name={filter} main_filter={main_filter} />
             </div>
         );
     });
 
-    const bookmarks = data.bookmarks.map((bookmark) => {
+    const bookmarks = app_data.bookmarks.map((bookmark) => {
         return <Bookmark key={bookmark.name} bookmark={bookmark} />
     });
 
@@ -84,7 +84,7 @@ function Active({ selected_filter, data }) {
                             Bookmark&nbsp;
                                 </div>
                         <p id="bookmark-count" className="hp font-size_6 inline">
-                            ({data.bookmarks.length})
+                            ({app_data.bookmarks.length})
                                 </p>
                     </div>
                     <div className="hp row col-na-6 text-right underline">
@@ -103,16 +103,16 @@ function Active({ selected_filter, data }) {
     );
 }
 
-function Features({ data, state, active, selected_filter }) {
+function Features({ main, app_data }) {
 
-    if (state.get === 'expired' || !active.get) {
+    if (main.state.get === 'expired' || !main.active.get) {
         return (
-            <Inactive type={data.subs === 'expired' ? 'expired' : 'inactive'} active={active} />
+            <Inactive type={app_data.subs === 'expired' ? 'expired' : 'inactive'} main_active={main.active} />
         )
     }
 
     return (
-        <Active selected_filter={selected_filter} data={data} />
+        <Active main_filter={main.filter} app_data={app_data} />
     )
 
 }

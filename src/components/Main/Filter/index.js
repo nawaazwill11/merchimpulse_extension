@@ -5,11 +5,13 @@ import './styles.scss';
  * @returns  {ReactDOM} 
  */
 
-function Filter({ name, selected, selected_filter }) {
+function Filter({ name, isSelected, main_filter }) {
 
     return (
-        <div className={"hp row col-na-12 border_1 border-radius_2 padding_5 text-center filter " + (selected ? 'selected' : '')}
-            onClick={(e) => handleClick(name, selected_filter)}>
+        <div className={
+            "hp row col-na-12 border_1 border-radius_2 padding_5 text-center filter " + 
+            (isSelected ? 'selected' : '')}
+            onClick={(e) => handleClick(name, main_filter)}>
             {name}
         </div>
     );
@@ -23,11 +25,11 @@ function Filter({ name, selected, selected_filter }) {
  */
 
 
-function handleClick(name, selected_filter) {
+function handleClick(name, main_filter) {
     
     // add to filter name to local storage //
 
-    selected_filter.set(name);
+    main_filter.set(name);
 
 }
 

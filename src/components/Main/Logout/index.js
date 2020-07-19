@@ -2,18 +2,18 @@ import React from 'react';
 import './styles.scss';
 import { OM } from '../../OverlayMessage';
 
-function handleClick(message) {
+function handleClick(appMessage) {
 
-    message.set({
+    appMessage.set({
         name: 'logout',
         nextState: 'base'
     });
 }
 
-function Logout({ message }) {
+function Logout({ appMessage }) {
 
     return (
-        <div id="logout" className="" onClick={() => handleClick(message)} >
+        <div id="logout" className="" onClick={() => handleClick(appMessage)} >
             <img className="small-icon" src="/logout.svg" alt="logout" />
         </div>
     );

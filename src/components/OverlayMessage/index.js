@@ -1,43 +1,39 @@
 import React from 'react';
 import './styles.scss';
 
-
-function OverlayMessage(props) {
-
-    const message = props.message;
-    const appState = props.appState;
-
-    const message_def = {
-        login: {
-            success: 'You are logged in!',
-            error: (errors) => {
-                return Array.from(Object.keys(errors)).join(<br />)}
-        },
-        logout: 'You have been logged out',
-        expired: 'Your free trial is over,' +
-            'Please Buy our subscription to keep using,' +
-            'Merch Impulse',
-    };
+function OverlayMessage({ appMessage, appState }) {
 
     return (
         <div id="message" className="hp row col abs top0 left0 flex v-center">
-            <div className="hp row col30 padding1 flex-column h-center v-center">
-                <div className="hp font-size1_5 margin-bottom1 text-center">
-                    {message_def[message.get.name]}
+            <div className="hp row col70 padding1 flex-column h-center v-center">
+                <div className="hp row font-size1 margin-bottom1 flex h-center">
+                    <div className="hp row col-na-10">
+                        <div className="hp padding1 text-center font-size1_5 bold border-radius_2"
+                            style={{ backgroundColor: appMessage.get.bg }}>
+                            {appMessage.get.header}
+                        </div>
+                        {appMessage.get.body}
+                    </div>
                 </div>
-                <div className="hp">
-                    <button className="hp btn btn-primary-inverse" onClick={(e) => handleClose(message, appState)}>Close</button>
+                <div className="hp row flex h-center margin-top1">
+                    <button className="hp col-na-6 btn btn-primary-inverse "
+                        onClick={(e) => handleClose(appMessage, appState)}>
+                        Close
+                    </button>
                 </div>
             </div>
         </div>
     );
 }
 
+function handleClose(appMessage, appState) {
 
-function handleClose(message, appState) {
+    const nextState = appMessage.get.nextState;
 
-    message.set({});
-    appState.set(message.get.nextState);
+    if (nextState) {
+        appState.set(nextState);
+    }
+    appMessage.set(false);
 
 }
 
