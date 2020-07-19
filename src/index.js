@@ -5,7 +5,7 @@ import App from './App/index';
 import * as serviceWorker from './serviceWorker';
 import channel from './util/channel';
 import { validateData } from './util/storage';
-import { data } from './mock';
+// import { data } from './mock';
 
 async function getStorageItems() {
 
@@ -18,6 +18,8 @@ async function getStorageItems() {
             };
 
             const response = await channel.sendMessage(message);
+
+            console.log(response);
             
             // IMPORTANT
             // check for data keys validity.
@@ -31,7 +33,7 @@ async function getStorageItems() {
         }
         catch (error) {
             console.error(error);
-            return reject(error);
+            return reject('Storage Error');
         }
     });
 
@@ -46,14 +48,14 @@ async function getStorageItems() {
         const { error, data } = await getStorageItems();
 
         if (error)
-            props.error = true;
+            props.error = error;
 
         else
             props.app_data = data;
     }
     catch (error) {
         console.log(error);
-        props.error = true;
+        props.error = 'An Internal Error Has Occured';
     }
     finally {
 

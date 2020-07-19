@@ -1,8 +1,19 @@
 import React from 'react';
 
-function Error() {
+function Error({ error }) {
 
-    return <h1>Error</h1>
+    const body = document.querySelector('body');
+    body.style.backgroundColor = "red";
+
+    return (
+        <div className="div hp row col">
+            <div className="hp font-size1_5 padding1 margin-top2">
+                <div className="hp bold margin-bottom1">
+                    Could not load app</div>
+                {error}
+            </div>
+        </div>
+    )
 
 }
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.scss';
 import { Error, Base, Main, OM } from '../components';
 
-function App({app_data}) {
+function App({error, app_data}) {
   /* 
     App has 3 main states:
       1. Fresh / logout
@@ -17,7 +17,7 @@ function App({app_data}) {
         3.1. Only View Bookmarks active
   */
 
-  const [state, setState] = useState(app_data.state);
+  const [state, setState] = useState(error || app_data.state);
   const [message, setMessage] = useState({});
   const [data, setData] = useState(app_data);
 
@@ -48,7 +48,7 @@ function App({app_data}) {
     else if (state === 'main')
       return <Main app={app} />
 
-    else return <Error />
+    else return <Error error={error} />
   };
 
   
