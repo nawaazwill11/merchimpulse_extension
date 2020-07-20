@@ -6,7 +6,7 @@ export const extension_id = 'alfiagindfcaggjeofolfdifnlciilgm';
 
 // export const extension_id = 'gcfhlcjmpnknffcpblnadkljicabdnfn';
 
-export const api_server = "http:localhost:8000";
+export const api_server = "http://localhost:8000";
 
 export const validations = {
     credentials: function ({ email, password }) {
@@ -22,6 +22,7 @@ export const validations = {
         return errors.length ? errors : null;
     }
 }
+
 export const message_def = {
     authentication: {
         success: function () {
@@ -32,29 +33,20 @@ export const message_def = {
             };
         },
         error: function (errors) {
-            console.log('errors', errors)
             return {
                 header: 'Login Failed',
                 bg: 'red',
-                body: (
-                    <div className="hp row">
-                        <p className="hp bold">Issues:</p>
-                        <ul className="hp row padding0 padding-left1">
-                            {errors.map((error) => (
-                                <li className="hp padding-bottom_5">
-                                    {`${error}`}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )
+                errors: errors
             }
         }
     },
     state: {
-        expired: 'Your free trial is over,' +
-            'Please Buy our subscription to keep using,' +
-            'Merch Impulse',
+        expired: function () {
+            return {
+                header: 'Trial Period over',
+                bg: 'red'
+            }
+        }
     },
     logout: function () {
         return {
@@ -72,7 +64,7 @@ export const api_routes = {
 
 export const api = {
     login: function (credentials) {
-        return fetch('http://localhost:8000/api/login', {
+        return fetch(api_routes.login, {
             method: "POST",
             headers: new Headers({
                 'Content-Type': 'application/json',
