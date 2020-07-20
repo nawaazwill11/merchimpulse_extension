@@ -2,10 +2,14 @@ import React from 'react';
 
 import validator from 'email-validator';
 
-// export const extension_id = 'alfiagindfcaggjeofolfdifnlciilgm';
-export const extension_id = 'gcfhlcjmpnknffcpblnadkljicabdnfn'
+export const extension_id = 'alfiagindfcaggjeofolfdifnlciilgm';
+
+// export const extension_id = 'gcfhlcjmpnknffcpblnadkljicabdnfn';
+
+export const api_server = "http:localhost:8000";
+
 export const validations = {
-    credentials: function (email, password) {
+    credentials: function ({ email, password }) {
 
         const errors = [];
 
@@ -28,6 +32,7 @@ export const message_def = {
             };
         },
         error: function (errors) {
+            console.log('errors', errors)
             return {
                 header: 'Login Failed',
                 bg: 'red',
@@ -60,3 +65,19 @@ export const message_def = {
     }
 
 };
+
+export const api_routes = {
+    login: api_server + '/api/login',
+}
+
+export const api = {
+    login: function (credentials) {
+        return fetch('http://localhost:8000/api/login', {
+            method: "POST",
+            headers: new Headers({
+                'Content-Type': 'application/json',
+            }),
+            body: JSON.stringify(credentials)
+        });
+    }
+}

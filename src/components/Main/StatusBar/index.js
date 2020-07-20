@@ -50,7 +50,7 @@ function StatusBar({ subs, main_active, count, app_message }) {
                     main_active.get 
                         ?   subs === 'full' 
                             ? ''
-                            : `Searches left: ${count}`
+                            : `Searches left: ${10 - count}`
                         : ''
                 }      
             </div>

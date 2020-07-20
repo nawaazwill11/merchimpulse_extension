@@ -202,7 +202,7 @@
 				console.log('Ping payload received:\n');
 				console.log(payload);
 
-				const { access_token, subs, count } = payload;
+				const { access_token, subs } = payload;
 				const to_update = {};
 
 				if (payload.token_refreshed) {
@@ -212,6 +212,7 @@
 				console.log('Updating storage with payload');
 				to_update.subs = subs.type;
 				to_update.count =  subs.count;
+				to_update.state = 'main';
 				setToStorage({ ...to_update });
 			}
 		}

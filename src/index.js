@@ -21,6 +21,7 @@ async function getStorageItems() {
 
             console.log(response);
             
+            if(!response) throw new Error('No Response.')
             // IMPORTANT
             // check for data keys validity.
             // if not all are found, set default values.com
