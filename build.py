@@ -3,9 +3,9 @@ import shutil
 
 def addBGScript():
     scripts = [
-        '/home/walker/workspace/projects/mi_ext_view/background.js',
-        '/home/walker/workspace/projects/mi_ext_view/inject.js',
-        '/home/walker/workspace/projects/mi_ext_view/process.js',
+        'background.js',
+        'inject.js',
+        'process.js',
     ]
     
     build_dir = os.getcwd() + '/build'
