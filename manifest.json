@@ -22,6 +22,7 @@
         {
             "matches": [
                 "http://localhost:3000/",
+                "http://localhost:8000/*",
                 "https://www.tmdn.org/tmview/api/search/*",
                 "https://www.amazon.com/*?*=*",
                 "https://www.amazon.de/*?*=*",
@@ -40,6 +41,7 @@
         "matches": [
             "https://www.tmdn.org/tmview/api/search/*",
             "http://localhost:3000/*",
+            "http://localhost:8000/*",
             "https://www.amazon.com/*?*=*",
             "https://www.amazon.de/*?*=*",
             "https://www.amazon.co.uk/*?*=*"

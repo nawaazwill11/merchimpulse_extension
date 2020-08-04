@@ -202,12 +202,12 @@
 				console.log('Ping payload received:\n');
 				console.log(payload);
 
-				const { access_token, subs } = payload;
+				const { auth_token, subs } = payload;
 				const to_update = {};
 
 				if (payload.token_refreshed) {
 					console.log('Token was refreshed')
-					to_update.push({ access_token: access_token });
+					to_update.push({ auth_token });
 				}
 				console.log('Updating storage with payload');
 				to_update.subs = subs.type;
