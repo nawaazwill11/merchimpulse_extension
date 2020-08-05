@@ -8,6 +8,9 @@ chrome.runtime.onInstalled.addListener(function () {
                   pageUrl: { urlContains: 'localhost' },
                }),
                new chrome.declarativeContent.PageStateMatcher({
+                  pageUrl: { urlContains: 'merchimpulse.com' },
+               }),
+               new chrome.declarativeContent.PageStateMatcher({
                   pageUrl: { urlContains: 'https://www.tmdn.org/tmview/api/search/' },
                }),
                new chrome.declarativeContent.PageStateMatcher({
