@@ -1,0 +1,116 @@
+/* Curved Arrow */
+.arrow {
+    position: absolute;
+    margin: 0 auto;
+    width: 100px;
+    top: -5px;
+    left: 20px;
+}
+
+.arrow .curve {
+    position: relative;
+    top: -5px;
+    left: -1.5px;
+    border: 2px dashed #be5f4b;
+    border-color: transparent transparent transparent #be5f4b;
+    height: 271px;
+    width: 1200px;
+    border-radius: 0px 0 0 135px;
+}
+
+.arrow .point {
+    position: absolute;
+    /* left: 40px; */
+    top: 0;
+}
+
+.arrow .point:before,
+.arrow .point:after {
+    border: 1px dashed #be5f4b;
+    height: 20px;
+    content: "";
+    position: absolute;
+}
+
+.arrow .point:before {
+    top: -11px;
+    left: -9px;
+    transform: rotate(-138deg);
+}
+
+.arrow .point:after {
+    top: -11px;
+    left: 6px;
+    transform: rotate(-42deg);
+}
+
+/* Curved Arrow end */ 
+
+.small-icon {
+    width: 0.8rem;
+}
+
+.filter {
+    cursor: pointer;
+    
+    &.selected {
+        color: white;
+        background-color: #F57200;
+    }
+}
+
+#logout img {
+    background: #f57200;
+    border-radius: 50%;
+    padding: 0.3rem 0.4rem;
+    cursor: pointer;
+}
+
+/* Status-Bar */
+
+.checkbox-container {
+    display: inline-block;
+    position: relative;
+    
+    label {
+        background-color: #aaa;
+        border: 1px solid #fff;
+        border-radius: 1.7rem;
+        display: inline-block;
+        position: relative;
+        transition: all 0.3s ease-out;
+        width: 2.7rem;
+        height: 1.4rem;
+        z-index: 2;
+
+        &::after {
+            content: ' ';
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            transform: translateX(0);
+            transition: transform 0.3s linear;
+            width: 20px;
+            height: 20px;
+            /* z-index: 3; */
+        }
+    }
+    
+    input {
+        visibility: hidden;
+        position: absolute;
+    }
+
+    input:checked + label::after {
+        transform: translateX(calc(100% + 0.5px));
+    }
+
+    .active {
+        background-color: #F57200;
+    }
+    
+}
+
+/* Status-Bar end */

@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './styles.scss'
-
-const Fresh = ({ setPage }) => {
-
+const Welcome = ({
+	setView
+}) => {
 	return (
 		<div className="hp row col flex h-center v-center padding1">
 			<div className="hp row col40">
@@ -16,7 +15,7 @@ const Fresh = ({ setPage }) => {
 						</div>
 						<div>
 							<button className="hp btn btn-primary login-btn font-size1_3"
-								onClick={() => setPage('login')}>
+								onClick={() => setView('signin')}>
 								Sign In
 							</button>
 						</div>
@@ -25,11 +24,10 @@ const Fresh = ({ setPage }) => {
 			</div>
 		</div>
 	)
-
 }
 
-Fresh.propTypes = {
-	setPage: PropTypes.func,
+Welcome.propTypes = {
+	setView: PropTypes.func
 }
 
-export default Fresh
+export default Welcome

@@ -2,7 +2,7 @@ import React from 'react';
 
 import validator from 'email-validator';
 
-export const extension_id = 'lgjhnbehmcaigjnmiglkagghapafogbm';
+export const extension_id = 'anefmjkkelhnceplpbmoakibocfoimlo';
 
 // export const extension_id = 'gcfhlcjmpnknffcpblnadkljicabdnfn';
 
