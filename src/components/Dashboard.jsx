@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Header from './Header'
+import { HISTORY_ROUTE } from '../config/definitions'
+
 
 const Dashboard = ({
 	state,
@@ -74,8 +76,20 @@ const Dashboard = ({
 							<div className="hp bold font-size1">
 								Options
 							</div>
-							<div className="hp row">
-								
+							<div className="hp row flex">
+								<div className="hp row flex1">
+									Daily Free Search Quota
+								</div>
+								<div className="">
+									10/10
+								</div>
+							</div>
+							<div className="hp row flex">
+								<div className="hp row flex1">
+									<a href={HISTORY_ROUTE} rel="noreferrer" target="_blank">
+										Search History
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>
