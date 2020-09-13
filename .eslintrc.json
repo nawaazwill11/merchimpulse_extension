@@ -3,7 +3,9 @@
         "node": true,
         "commonjs": true,
         "browser": true,
-        "es6": true
+        "es6": true,
+        "node": true,
+        "commonjs": true
     },
     "extends": [
         "eslint:recommended",

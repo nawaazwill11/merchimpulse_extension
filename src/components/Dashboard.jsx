@@ -1,13 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Header from './Header'
-import { HISTORY_ROUTE } from '../config/definitions'
-
+import {
+	HISTORY_ROUTE,
+	BOOKMARKS_ROUTE,
+	SETTINGS_ROUTE,
+	PROFILE_ROUTE, GUMROAD_ROUTE
+} from '../config/definitions'
 
 const Dashboard = ({
 	state,
 	active,
 	active_filter,
+	search_count,
 	setActive,
 	setActiveFilter,
 }) => {
@@ -63,7 +68,7 @@ const Dashboard = ({
 
 			return (
 				<div className="hp row flex24 flex-column">
-					<div className="hp row flex1">
+					<div className="hp row margin-bottom1">
 						<div className="hp row bold padding-bottom_5 font-size1">
 							Always-on Filters
 						</div>
@@ -71,25 +76,70 @@ const Dashboard = ({
 							{filters}
 						</div>
 					</div>
-					<div className="hp row flex1 flex-column margin-bottom_-5">
+					<div className="hp row flex-column margin-bottom_-5">
 						<div className="hp row">
 							<div className="hp bold font-size1">
 								Options
 							</div>
-							<div className="hp row flex">
-								<div className="hp row flex1">
-									Daily Free Search Quota
-								</div>
-								<div className="">
-									10/10
-								</div>
+							<div className="hp row">
+								{
+									state === 'trial'
+										? (
+											<div className="hp row flex h-center v-center margin-top1">
+												<div className="hp flex1">
+													Daily Free Quota
+												</div>
+												<div className="">
+													{10 - search_count} Left
+												</div>
+											</div>
+										)
+										: ''
+								}
 							</div>
-							<div className="hp row flex">
-								<div className="hp row flex1">
-									<a href={HISTORY_ROUTE} rel="noreferrer" target="_blank">
+							<div className="hp row flex h-center v-center margin-top1">
+								<div className="hp row flex">
+									<a
+										target="_blank"
+										rel="noopener noreferrer"
+										href={HISTORY_ROUTE}>
 										Search History
 									</a>
 								</div>
+							</div>
+							<div className="hp row flex h-center v-center margin-top1">
+								<div className="hp row flex">
+									<a
+										target="_blank"
+										rel="noopener noreferrer"
+										href={BOOKMARKS_ROUTE}>
+										Bookmarks
+									</a>
+								</div>
+							</div>
+							<div className="hp row flex h-center v-center margin-top1">
+								<div className="hp row flex">
+									<a
+										target="_blank"
+										rel="noopener noreferrer"
+										href={SETTINGS_ROUTE}>
+										Settings
+									</a>
+								</div>
+							</div>
+							<div className="hp row flex h-center v-center margin-top1">
+								<button
+									className="hp row padding1 btn-primary border-none white font-size1"
+								>
+									<a
+										className="hp white"
+
+										target="_blank"
+										rel="noopener noreferrer"
+										href={state === 'trial' ? GUMROAD_ROUTE : PROFILE_ROUTE}>
+										{state === 'trial' ? 'Upgrade Your Account' : 'You are a Pro'}
+									</a>
+								</button>
 							</div>
 						</div>
 					</div>
@@ -104,13 +154,16 @@ const Dashboard = ({
 			<Header />
 			<div className="hp row flex1 flex-column padding1">
 				<div className="hp row switch flex v-center margin-bottom1">
-					<div className="">
+					<div className="hp flex1">
 						<div className="checkbox-container yellow">
 							<input type="checkbox" id="toggle" className="toggle" defaultChecked={active} />
 							<label htmlFor="toggle" className={active ? 'active' : ''}
 								onClick={() => setActive(!active)}></label>
 							<div className="active-circle"></div>
 						</div>
+					</div>
+					<div id="logout" className="" onClick={() => { }} >
+						<img className="small-icon" src="/logout.svg" alt="logout" />
 					</div>
 				</div>
 				<div className="hp row flex flex1 h-center">
@@ -125,6 +178,7 @@ Dashboard.propTypes = {
 	active: PropTypes.bool,
 	state: PropTypes.string,
 	active_filter: PropTypes.string,
+	search_count: PropTypes.number,
 	setActive: PropTypes.func,
 	setActiveFilter: PropTypes.func,
 }

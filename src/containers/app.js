@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { loadData } from '../actions/app'
 import App from '../App'
 
 const mapStateToProps = (state) => {
@@ -7,5 +8,8 @@ const mapStateToProps = (state) => {
 		view: state.app.view,
 	})
 }
+const mapDispatchToProps = (dispatch) => ({
+	loadData: () => dispatch(loadData())
+})
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)

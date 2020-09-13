@@ -1,13 +1,15 @@
 import {
 	SET_STATE,
 	SET_ACTIVE,
-	SET_ACTIVE_FILTER
+	SET_ACTIVE_FILTER,
+	SET_SEARCH_COUNT,
 } from '../actions/dashboard'
 
 const initial_state = {
 	state: 'trial',
 	active: true,
-	active_filter: '',
+	active_filter: 'T-Shirt',
+	search_count: 0,
 }
 
 const dashboardReducer = (state = initial_state, action) => {
@@ -26,6 +28,11 @@ const dashboardReducer = (state = initial_state, action) => {
 			return {
 				...state,
 				active_filter: action.payload,
+			}
+		case SET_SEARCH_COUNT:
+			return {
+				...state,
+				search_count: action.payload,
 			}
 		default: return state
 	}
