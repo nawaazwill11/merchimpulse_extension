@@ -1,3 +1,4 @@
+/* eslint-disable no-prototype-builtins */
 import { createAction } from 'redux-actions'
 import { PING_ROUTE, getStorageData } from '../config/definitions'
 import { setState, setActive, setSearchCount } from './dashboard'
@@ -47,11 +48,12 @@ export const loadData = () => (dispatch) => {
 					window.localStorage.setItem('auth_token', token)
 				}
 				const data = getStorageData()
-				console.log(data)
+				const active = data.hasOwnProperty('active') ? data.active : false
+				const filter = data.hasOwnProperty('filter') ? data.filter : ''
 				dispatch(setState(subs.type))
 				dispatch(setSearchCount(subs.count))
-				dispatch(setActive(data.active || true))
-				dispatch(setActiveFilter(data.filter || ''))
+				dispatch(setActive(active))
+				dispatch(setActiveFilter(filter))
 				dispatch(setView('dashboard'))
 
 			}

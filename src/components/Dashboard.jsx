@@ -55,7 +55,7 @@ const Dashboard = ({
 							className={
 								'hp row col-na-12 border_1 border-radius_2 padding_5 text-center filter '
 								+ (isSelected ? 'selected' : '')}
-							onClick={() => setActiveFilter(filter)}>
+							onClick={() => setActiveFilter(isSelected ? '' : filter)}>
 							{filter}
 						</div>
 					</div>
