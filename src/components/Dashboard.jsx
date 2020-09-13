@@ -12,6 +12,7 @@ const Dashboard = ({
 	state,
 	active,
 	active_filter,
+	search_count,
 	setActive,
 	setActiveFilter,
 }) => {
@@ -89,7 +90,7 @@ const Dashboard = ({
 													Daily Free Quota
 												</div>
 												<div className="">
-													10/10
+													{10 - search_count} Left
 												</div>
 											</div>
 										)
@@ -98,21 +99,30 @@ const Dashboard = ({
 							</div>
 							<div className="hp row flex h-center v-center margin-top1">
 								<div className="hp row flex">
-									<a href={HISTORY_ROUTE}>
+									<a
+										target="_blank"
+										rel="noopener noreferrer"
+										href={HISTORY_ROUTE}>
 										Search History
 									</a>
 								</div>
 							</div>
 							<div className="hp row flex h-center v-center margin-top1">
 								<div className="hp row flex">
-									<a href={BOOKMARKS_ROUTE}>
+									<a
+										target="_blank"
+										rel="noopener noreferrer"
+										href={BOOKMARKS_ROUTE}>
 										Bookmarks
 									</a>
 								</div>
 							</div>
 							<div className="hp row flex h-center v-center margin-top1">
 								<div className="hp row flex">
-									<a href={SETTINGS_ROUTE}>
+									<a
+										target="_blank"
+										rel="noopener noreferrer"
+										href={SETTINGS_ROUTE}>
 										Settings
 									</a>
 								</div>
@@ -123,6 +133,9 @@ const Dashboard = ({
 								>
 									<a
 										className="hp white"
+
+										target="_blank"
+										rel="noopener noreferrer"
 										href={state === 'trial' ? GUMROAD_ROUTE : PROFILE_ROUTE}>
 										{state === 'trial' ? 'Upgrade Your Account' : 'You are a Pro'}
 									</a>
@@ -165,6 +178,7 @@ Dashboard.propTypes = {
 	active: PropTypes.bool,
 	state: PropTypes.string,
 	active_filter: PropTypes.string,
+	search_count: PropTypes.number,
 	setActive: PropTypes.func,
 	setActiveFilter: PropTypes.func,
 }
