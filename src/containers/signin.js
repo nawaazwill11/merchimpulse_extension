@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setView } from '../actions/app'
+import { setView, signIn } from '../actions/app'
 import Signin from '../components/Signin'
 
 const mapStateToProps = (state) => ({
@@ -8,7 +8,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	setView: (view) => dispatch(setView(view))
+	setView: (view) => dispatch(setView(view)),
+	signIn: (email, password) => dispatch(signIn(email, password))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signin)

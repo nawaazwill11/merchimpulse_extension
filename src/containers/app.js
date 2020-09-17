@@ -6,6 +6,7 @@ const mapStateToProps = (state) => {
 	console.log(state)
 	return ({
 		view: state.app.view,
+		overlay_active: state.overlay.active,
 	})
 }
 const mapDispatchToProps = (dispatch) => ({

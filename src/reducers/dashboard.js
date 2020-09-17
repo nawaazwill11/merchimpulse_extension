@@ -7,8 +7,8 @@ import {
 
 const initial_state = {
 	state: 'trial',
-	active: true,
-	active_filter: 'T-Shirt',
+	active: false,
+	active_filter: '',
 	search_count: 0,
 }
 

@@ -1,13 +1,13 @@
 import {
 	SET_VIEW,
-	SET_LOADER,
+	SET_DATA,
 	SET_AUTH,
+	SET_APP,
 } from '../actions/app'
 
 const initial_state = {
 	auth: false,
-	loader: true,
-	view: '',
+	view: 'loader',
 }
 
 const appReducer = (state = initial_state, action) => {
@@ -23,11 +23,13 @@ const appReducer = (state = initial_state, action) => {
 				...state,
 				view: action.payload,
 			}
-		case SET_LOADER:
+		case SET_DATA:
 			return {
 				...state,
-				loader: action.payload,
+				...action.payload,
 			}
+		case SET_APP: 
+			return action.payload
 		default: return state
 	}
 }

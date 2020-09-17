@@ -3,8 +3,14 @@ import PropTypes from 'prop-types'
 import Header from './Header'
 
 const Signin = ({
-	setView,
+	signIn
 }) => {
+
+	const handleSignIn = () => {
+		const email = document.getElementById('email').value.match(/\S+/)[0]
+		const password = document.getElementById('password').value.match(/\S+/)[0]
+		signIn(email, password)
+	}
 
 	return (
 		<>
@@ -17,10 +23,10 @@ const Signin = ({
                         </div> */}
 						<div className="hp flex-column flex20 v-center h-center padding1">
 							<div className="hp row flex h-center margin1">
-								<input className="hp inp" type="email" name="email" placeholder="Email" />
+								<input className="hp inp" type="email" id="email" placeholder="Email" />
 							</div>
 							<div className="hp row flex h-center margin1">
-								<input className="hp inp" type="password" name="password" placeholder="Password" />
+								<input className="hp inp" type="password" id="password" placeholder="Password" />
 							</div>
 							<div className="hp row">
 								<a className="hp font-size_8"
@@ -28,7 +34,7 @@ const Signin = ({
 							</div>
 							<div className="hp padding1">
 								<button id="login" className="hp btn btn-primary"
-									onClick={() => {setView('dashboard')}} >Sign In</button>
+									onClick={() => handleSignIn()} >Sign In</button>
 							</div>
 						</div>
 						<div className="hp divider margin-left1 margin-right1"></div>
@@ -45,7 +51,7 @@ const Signin = ({
 }
 
 Signin.propTypes = {
-	setView: PropTypes.func,
+	signIn: PropTypes.func,
 }
 
 export default Signin

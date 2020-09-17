@@ -15,7 +15,10 @@ const Dashboard = ({
 	search_count,
 	setActive,
 	setActiveFilter,
+	logout,
 }) => {
+
+	console.log('search_count', search_count)
 
 	const Content = () => {
 		const Inactive = () => {
@@ -162,9 +165,13 @@ const Dashboard = ({
 							<div className="active-circle"></div>
 						</div>
 					</div>
-					<div id="logout" className="" onClick={() => { }} >
+					<button
+						type="button"
+						className="logout"
+						onClick={() => logout()}
+					>
 						<img className="small-icon" src="/logout.svg" alt="logout" />
-					</div>
+					</button>
 				</div>
 				<div className="hp row flex flex1 h-center">
 					<Content />
@@ -181,6 +188,7 @@ Dashboard.propTypes = {
 	search_count: PropTypes.number,
 	setActive: PropTypes.func,
 	setActiveFilter: PropTypes.func,
+	logout: PropTypes.func,
 }
 
 export default Dashboard

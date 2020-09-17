@@ -59,45 +59,32 @@ export const message_def = {
 	logout: function () {
 		return {
 			header: 'Logged out',
-			bg: "#F57200",
+			bg: '#F57200',
 			nextState: 'base'
 		}
 	}
 
 }
 
-// export const api_routes = {
-// 	login: api_server + '/api/login',
-// }
+export const localStoreKey = 'app_data'
+export const authTokenKey = 'auth_token'
+export const filterKey = 'filter'
+export const activeKey = 'active'
 
-// export const api = {
-// 	login: function (credentials) {
-// 		return fetch(api_routes.login, {
-// 			method: "POST",
-// 			headers: new Headers({
-// 				'Content-Type': 'application/json',
-// 			}),
-// 			body: JSON.stringify(credentials)
-// 		})
-// 	}
-// }
-
-const app_data_identifier = 'app_data'
-
-export function getStorageData() {
-	const data_string = window.localStorage.getItem(app_data_identifier)
-	console.log(data_string)
-	let data
-	try {
-		data = JSON.parse(data_string)
-		console.log(data)
-	} catch (error) { console.log(error) }
-	if (!data) return {}
-	return data
-}
-
-export function setStorageData(key, value) {
-	const data = getStorageData()
-	data[key] = value
-	window.localStorage.setItem(app_data_identifier, JSON.stringify(data))
+export const localStore = {
+	get: (key) => {
+		try {
+			const store = window.localStorage.getItem(localStoreKey)
+			const app_data = store ? JSON.parse(store) : {}
+			if (app_data && key) return app_data[key]
+			return app_data
+		} catch (error) { console.log(error); return null }
+	},
+	set: (key, value) => {
+		try {
+			const app_data = localStore.get()
+			app_data[key] = value
+			window.localStorage.setItem(localStoreKey, JSON.stringify(app_data))
+		} catch (error) { console.log(error); return null }
+	}
 }
