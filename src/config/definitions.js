@@ -15,6 +15,7 @@ export const PROFILE_ROUTE = route('dashboard/profile')
 export const GUMROAD_ROUTE = 'https://gumroad.com'
 export const SIGNIN_ROUTE = route('api/signin')
 export const PING_ROUTE = route('api/ping')
+export const SIGNUP_WEB_ROUTE = route('signup')
 
 export const validations = {
 	credentials: function ({ email, password }) {

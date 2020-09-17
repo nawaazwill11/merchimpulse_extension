@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Header from './Header'
-
+import { SIGNUP_WEB_ROUTE } from '../config/definitions'
 const Signin = ({
 	signIn
 }) => {
@@ -39,9 +39,14 @@ const Signin = ({
 						</div>
 						<div className="hp divider margin-left1 margin-right1"></div>
 						<div className="hp flex8 flex h-center v-center padding1">
-							<p href="#!" className="hp font-size1 border_1 padding1 bold">
+							<a
+								href={SIGNUP_WEB_ROUTE}
+								className="hp font-size1 padding1 bold primary-contrast"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
 								Create A New Account
-							</p>
+							</a>
 						</div>
 					</div>
 				</div>

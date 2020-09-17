@@ -11,9 +11,9 @@ const Welcome = ({
 					<div className="hp col flex-column h-center welcome-text">
 						<div className="hp text-center">
 							<div className="hp font-size1_6 margin-bottom_5">Welcome To</div>
-							<div className="hp bold font-size2">Merch Impulse</div>
+							<div className="hp bold font-size2 margin-top2">Merch Impulse</div>
 						</div>
-						<div>
+						<div className="hp margin-top3">
 							<button className="hp btn btn-primary login-btn font-size1_3"
 								onClick={() => setView('signin')}>
 								Sign In
