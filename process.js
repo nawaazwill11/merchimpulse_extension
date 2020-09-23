@@ -1,253 +1,83 @@
+const chrome = window.chrome
+const component_id = '_mi_injected_element'
 
-(async function () {
-
-	/**
-	 * Checks for trademark
-	 * 1. Watches for tmdn.org's search page.
-	 * 2. Extracts JSON data from the tradmark page
-	 * 3. Sends a message with the JSON data indicating the trademark of the search term
-	 * 4. Closes the tmdn.org's search page.
-	 */
-	function trademarkCheck() {
-
-		const regex = new RegExp('https://www.tmdn.org/tmview/api/search/*')
-
-		if (window.location.href.match(regex)) {
-
-			const data = JSON.parse(document.body.innerText);
-
-			chrome.runtime.sendMessage({ type: 'DATA', data: data, key: 'tab' });
-
-			window.close();
-		}
-	}
-
-	/**
-	 * Redirect the Amazon search page according the seletect filter.
-	 * 1. Matches the amazon search URL.
-	 * 2. Modifies the URL according to the corresponding filter.
-	 * 3. Redirect the page.
-	 */
-	function filterRedirect() {
-
-		const regex = new RegExp('https:\/\/www\.amazon\..*\/.*?.*=.*');
-
-		if (window.location.href.match(regex)) {
-			chrome.runtime.sendMessage(
-				{ type: 'STORAGE_GET', key: 'recent_filter' },
-				function (filter) {
-					if (filter) {
-						if (!window.location.href.match(filter)) {
-							const url = (
-								window.location.href +
-								`&i=fashion-novelty&hidden-keywords=${filter}`
-							);
-							window.location.href = url;
-						}
-					}
-				}
-			);
-		}
-	}
-
-	/**
-	 * A definition of keys with default values 
-	 * that are required to run the app.
-	 */
-	const defaults = {
-		active: false,
-		auth_token: '',
-		subs: '',
-		state: 'base',
-		bookmarks: [],
-		tab: '',
-		recent_filter: '',
-		error: false,
-		count: 0,
-	};
-
-	/**
-	 * An array of required storage keys
-	 */
-	const storage_identifiers = Object.keys(defaults);
-
-	const data = {};
-	const error_stack = [];
-
-	async function setToStorage(data) {
-
-		return new Promise((resolve, reject) => {
-			try {
-				chrome.storage.sync.set(data, () => resolve());
-			}
-			catch (error) {
-				error_stack.push('Failed at setToStorage():\n', error);
-				reject();
-			}
-		});
-	}
-
-	async function setDefault(keys) {
-
-		return new Promise(async (resolve, reject) => {
-
-			try {
-				const to_default = (
-					!keys
-						? defaults
-						: (
-							keys.reduce((keys_object, key) => {
-								keys_object[key] = defaults[key]
-								return keys_object;
-							}, {})
-						)
-				);
-
-				await setToStorage(to_default);
-				resolve();
-			}
-			catch (error) {
-				error_stack.push('Failed at setDefault()\n' + error);
-				reject();
-			}
-		});
-	}
-
-
-	function setErrorState() {
-		error_stack.forEach((error) => {
-			console.log(error);
-		});
-		setToStorage({ error: true });
-	}
-
-	/**
-	 * Fetches keys from local storage and set un-assigned or
-	 * undefined keys to default values.
-	 */
-	function bookstrap() {
-
-		console.log('Bootstrapping initiated');
-		return new Promise(async (resolve, reject) => {
-
-			try {
-
-				chrome.storage.sync.get(storage_identifiers, async function (response) {
-
-					try {
-
-						const undefined_keys = []; // stores keys unset in storage
-
-						// checks keys from response against required keys
-						// adds un-assigned keys to undefined_keys array
-						storage_identifiers.forEach((key) => {
-							if (response[key] !== undefined) {
-								data[key] = response[key]; // store values for later uses
-								return;
-							}
-							data[key] = defaults[key];
-							undefined_keys.push(key); // add keys with undefined values
-						});
-
-						const finishBootstrapping = function (state) {
-							console.log('Bootstrapping finished');
-							resolve(state);
-						};
-
-						// if all key-value are defined, end bootstrap
-						if (undefined_keys.length)
-							// set values of each key with undefined value
-							await setDefault(undefined_keys);
-						return finishBootstrapping(data);
-					}
-					catch (error) {
-						error_stack.push('Failed at bootstrap:promise\n' + error);
-						setErrorState();
-					}
-				});
-
-			}
-			catch (error) {
-				error_stack.push('Failed at bootstrap()\n' + error);
-				reject();
-			}
-		});
-	}
-
-
-	async function fetchUserInfo(data) {
-
+const injectContainer = () => (
+	new Promise((resolve, reject) => {
 		try {
+			const el = document.querySelector('.s-search-results')
+			if (!el) return reject('Failed to inject extension.')
+			const container_el = document.createElement('div')
+			container_el.id = component_id
+			const parent = el.closest('.sg-col-inner')
+			parent.prepend(container_el)
+			resolve()
+		}
+		catch (e) {
+			reject(e)
+		}
+	})
+)
 
-			console.log('Pinging server initiated')
-	
-			const response_obj = await fetch('http://localhost:8000/api/ping', {
-				method: "POST", 
-				headers: { 
-					"Authorization": data.auth_token 
-				}
-			});
-
-			console.log('Pinging server complete');
-	
-			const { error, payload } = await response_obj.json();
-
-			if (error) {
-				console.log('Ping returned error:', error);
-				await setDefault();
-				error_stack.push(error);
-				setErrorState();
-			}
-			else {
-				console.log('Ping payload received:\n');
-				console.log(payload);
-
-				const { auth_token, subs } = payload;
-				const to_update = {};
-
-				if (payload.token_refreshed) {
-					console.log('Token was refreshed')
-					to_update.push({ auth_token });
-				}
-				console.log('Updating storage with payload');
-				to_update.subs = subs.type;
-				to_update.count =  subs.count;
-				to_update.state = 'main';
-				setToStorage({ ...to_update });
-			}
+const appendScripts = () => (
+	new Promise((resolve, reject) => {
+		try {
+			const head = document.head
+			const stylesheet = document.createElement('link')
+			stylesheet.href = chrome.extension.getURL('static/css/style.css')
+			stylesheet.rel = 'stylesheet'
+			head.append(stylesheet)
+			const scripts = ['script0.js', 'script1.js', 'script2.js']
+			const path = 'static/js/'
+			scripts.forEach((script) => {
+				const script_el = document.createElement('script')
+				script_el.type = 'text/javascript'
+				script_el.src = chrome.extension.getURL(path + script)
+				head.append(script_el)
+			})
+			resolve()
 		}
 		catch (error) {
-			error_stack.push('Server ping failed\n' + error);
-			setErrorState();
+			reject(error)
 		}
-	}
+	})
+)
 
-	async function initiate() {
 
+const localStoreKey = 'app_data'
+const authTokenKey = 'auth_token'
+
+const localStore = {
+	get: (key) => {
 		try {
-
-			const data = await bookstrap();
-			if (data.auth_token) {
-				await fetchUserInfo(data);
-			}
-			// await inject.insertContainer();
-			// inject.appendScripts();
-		}
-		catch (error) {
-			error_stack.push('Failed at initiate()\n' + error);
-			setErrorState();
-		}
-	}
-
-	// add window events
-	window.addEventListener('load', function (e) {
+			const store = window.localStorage.getItem(localStoreKey)
+			const app_data = store ? JSON.parse(store) : {}
+			if (app_data && key) return app_data[key]
+			return app_data
+		} catch (error) { console.log(error); return null }
+	},
+	set: (key, value) => {
 		try {
-			trademarkCheck();
-			filterRedirect()
-			initiate();
-		}
-		catch (error) {
-			setErrorState();
-		}
-	});
-})();
+			const app_data = localStore.get()
+			app_data[key] = value
+			window.localStorage.setItem(localStoreKey, JSON.stringify(app_data))
+		} catch (error) { console.log(error); return null }
+	}
+}
+
+const auth_token = localStore.get(authTokenKey)
+
+if (auth_token) {
+	fetch('http://localhost:8000/api/ping', {
+		methods: 'POST',
+		headers: new Headers({
+			Authorization: auth_token,
+		}),
+	})
+		.then((response) => response.json())
+		.then((response) => {
+			if (response.error) return localStore.set(authTokenKey, '')
+			injectContainer()
+				.then(() => appendScripts())
+				.then(() => {})
+		})
+}

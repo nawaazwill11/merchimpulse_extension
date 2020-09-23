@@ -67,10 +67,10 @@ export const message_def = {
 
 }
 
-export const localStoreKey = 'app_data'
-export const authTokenKey = 'auth_token'
 export const filterKey = 'filter'
 export const activeKey = 'active'
+export const localStoreKey = 'app_data'
+export const authTokenKey = 'auth_token'
 
 export const localStore = {
 	get: (key) => {
