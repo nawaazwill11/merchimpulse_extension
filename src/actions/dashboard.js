@@ -8,11 +8,11 @@ export const SET_SEARCH_COUNT = 'SET_SEARCH_COUNT'
 
 export const setState = createAction(SET_STATE)
 export const setSearchCount = createAction(SET_SEARCH_COUNT)
-export const setActive = (activity) => (dispatch) => {
-	localStore.set(activeKey, activity)
+export const setActive = (activity) => async (dispatch) => {
+	await localStore.set(activeKey, activity)
 	dispatch(createAction(SET_ACTIVE)(activity))
 }
-export const setActiveFilter = (filter) => (dispatch) => {
-	localStore.set(filterKey, filter)
+export const setActiveFilter = (filter) => async (dispatch) => {
+	await localStore.set(filterKey, filter)
 	dispatch(createAction(SET_ACTIVE_FILTER)(filter))
 }

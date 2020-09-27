@@ -114,15 +114,17 @@
         position: absolute;
     }
 
-    input:checked + label::after {
-        transform: translateX(calc(100% + 0.5px));
-    }
+   
 
     .active {
         background-color: #F57200;
     }
     
 }
+input:checked + label::after {
+    transform: translateX(calc(100% + 0.5px));
+}
+
 
 /* Status-Bar end */
 

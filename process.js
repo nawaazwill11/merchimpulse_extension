@@ -1,4 +1,3 @@
-const chrome = window.chrome
 const component_id = '_mi_injected_element'
 
 const injectContainer = () => (
@@ -22,17 +21,23 @@ const appendScripts = () => (
 	new Promise((resolve, reject) => {
 		try {
 			const head = document.head
-			const stylesheet = document.createElement('link')
-			stylesheet.href = chrome.extension.getURL('static/css/style.css')
-			stylesheet.rel = 'stylesheet'
-			head.append(stylesheet)
+			const styles = [
+				'bootstrap.min.css',
+				'style.css',
+			]
+			styles.forEach((style) => {
+				const stylesheet = document.createElement('link')
+				stylesheet.href = window.chrome.extension.getURL(`static/css/${style}`)
+				stylesheet.rel = 'stylesheet'
+				head.append(stylesheet)
+			})
+			const body = document.body
 			const scripts = ['script0.js', 'script1.js', 'script2.js']
-			const path = 'static/js/'
 			scripts.forEach((script) => {
 				const script_el = document.createElement('script')
 				script_el.type = 'text/javascript'
-				script_el.src = chrome.extension.getURL(path + script)
-				head.append(script_el)
+				script_el.src = window.chrome.extension.getURL(`static/js/${script}`)
+				body.append(script_el)
 			})
 			resolve()
 		}
@@ -65,10 +70,9 @@ const localStore = {
 }
 
 const auth_token = localStore.get(authTokenKey)
-
 if (auth_token) {
-	fetch('http://localhost:8000/api/ping', {
-		methods: 'POST',
+	fetch('https://merchimpulse.com/api/ping', {
+		method: 'POST',
 		headers: new Headers({
 			Authorization: auth_token,
 		}),
@@ -76,8 +80,11 @@ if (auth_token) {
 		.then((response) => response.json())
 		.then((response) => {
 			if (response.error) return localStore.set(authTokenKey, '')
-			injectContainer()
-				.then(() => appendScripts())
-				.then(() => {})
+			if (response.subs.count < 11) {
+				injectContainer()
+					.then(() => appendScripts())
+					.then(() => {})
+					.catch((error) => console.log(error))
+			}
 		})
 }

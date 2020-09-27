@@ -1,15 +1,17 @@
 {
     "name": "Merch Impulse",
     "version": "1.0.0",
-    "description": "Gets keyword source of Merch By Amazon",
+    "description": "A statistical tool to benefit on Merch By Amazon",
     "background": {
         "persistent": false,
-        "scripts": ["background.js"]
+        "scripts": [
+            "background.js"
+        ]
     },
     "page_action": {
-        "default_icon": "icons/pie32.png",
-        "defaukt_title": "Merch Impulse Extension",
-        "default_popup": "popup.html"
+        "default_icon": "mi_128.png",
+        "default_title": "Merch Impulse Extension",
+        "default_popup": "index.html"
     },
     "permissions": [
         "declarativeContent",
@@ -23,37 +25,39 @@
             "matches": [
                 "http://localhost:3000/",
                 "http://localhost:8000/*",
-                "http://merchimpulse.com/*",
+                "https://merchimpulse.com/*",
                 "https://www.tmdn.org/tmview/api/search/*",
                 "https://www.amazon.com/*?*=*",
                 "https://www.amazon.de/*?*=*",
                 "https://www.amazon.co.uk/*?*=*"
-                ],
+            ],
             "js": [
-                "process.js",
-                "inject.js"
+                "process.js"
             ]
         }
     ],
     "web_accessible_resources": [
-        "merchui/*"
+        "static/*"
     ],
     "externally_connectable": {
         "matches": [
             "https://www.tmdn.org/tmview/api/search/*",
             "http://localhost:3000/*",
             "http://localhost:8000/*",
-            "http://merchimpulse.com/*",
+            "https://merchimpulse.com/*",
             "https://www.amazon.com/*?*=*",
             "https://www.amazon.de/*?*=*",
             "https://www.amazon.co.uk/*?*=*"
         ]
     },
     "icons": {
-        "16": "icons/pie16.png",
-        "32": "icons/pie32.png",
-        "48": "icons/pie48.png",
-        "128": "icons/pie128.png"
+        "16": "mi_16.png",
+        "32": "mi_32.png",
+        "48": "mi_48.png",
+        "128": "mi_128.png",
+        "256": "mi_256.png",
+        "512": "mi_512.png"
     },
+    "content_security_policy": "script-src 'self' 'sha256-plQvMOHFGtj0KvvRBtQ2QDKgP5aL7svRM8l7xf6FY+E='; object-src 'self'",
     "manifest_version": 2
 }

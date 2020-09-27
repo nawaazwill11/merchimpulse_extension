@@ -6,7 +6,7 @@ export const extension_id = 'anefmjkkelhnceplpbmoakibocfoimlo'
 
 // export const extension_id = 'gcfhlcjmpnknffcpblnadkljicabdnfn';
 
-export const server_uri = process.env.SERVER_HOST || 'http://localhost:8000'
+export const server_uri = 'https://merchimpulse.com'
 export const route = (path) => `${server_uri}/${path}`
 export const HISTORY_ROUTE = route('dashboard/analysis')
 export const BOOKMARKS_ROUTE = route('dashboard/analysis/bookmarks')
@@ -72,20 +72,76 @@ export const activeKey = 'active'
 export const localStoreKey = 'app_data'
 export const authTokenKey = 'auth_token'
 
+const getTabId = () => (
+	new Promise((resolve) => {
+		window.chrome.tabs.query({ active: true, currentWindow: true }, (tab) => {
+			console.log(tab)
+			resolve(tab.id)
+		})
+	})
+)
+
+const messenger = (code) => {
+	return new Promise((resolve) => {
+		getTabId()
+			.then((id) => {
+				window.chrome.tabs.executeScript(id, { code: code }, (response) => resolve(response[0]))
+			})
+	})
+}
 export const localStore = {
 	get: (key) => {
-		try {
-			const store = window.localStorage.getItem(localStoreKey)
-			const app_data = store ? JSON.parse(store) : {}
-			if (app_data && key) return app_data[key]
-			return app_data
-		} catch (error) { console.log(error); return null }
+		return new Promise((resolve) => {
+			try {
+				const code = `localStorage.getItem('${localStoreKey}')`
+				messenger(code)
+					.then((store) => {
+						console.log(store)
+						const app_data = store ? JSON.parse(store) : {}
+						if (key) return resolve(app_data[key])
+						return resolve(app_data)
+					})
+			} catch (error) { console.log(error); return resolve(null) }
+		})
 	},
 	set: (key, value) => {
-		try {
-			const app_data = localStore.get()
-			app_data[key] = value
-			window.localStorage.setItem(localStoreKey, JSON.stringify(app_data))
-		} catch (error) { console.log(error); return null }
+		return new Promise((resolve) => {
+			try {
+				localStore.get()
+					.then((store) => {
+						store[key] = value
+						const set_code = `localStorage.setItem('${localStoreKey}', '${JSON.stringify(store)}')`
+						messenger(set_code)
+							.then(() => resolve())
+
+					})
+			} catch (error) { console.log(error); return null }
+		})
 	}
 }
+
+
+// export const localStore = {
+// 	get: (key) => {
+// 		return new Promise((resolve) => {
+// 			try {
+// 				const store = window.localStorage.getItem(localStoreKey)
+// 				const app_data = store ? JSON.parse(store) : {}
+// 				if (app_data && key) return resolve(app_data[key])
+// 				return resolve(app_data)
+// 			} catch (error) { console.log(error); return resolve(null) }
+// 		})
+// 	},
+// 	set: (key, value) => {
+// 		return new Promise((resolve) => {
+// 			try {
+// 				localStore.get()
+// 					.then((store) => {
+// 						store[key] = value
+// 						window.localStorage.setItem(localStoreKey, JSON.stringify(store))
+// 						return resolve()
+// 					})
+// 			} catch (error) { console.log(error); return resolve(null) }
+// 		})
+// 	}
+// }

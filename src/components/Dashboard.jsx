@@ -17,9 +17,7 @@ const Dashboard = ({
 	setActiveFilter,
 	logout,
 }) => {
-
-	console.log('search_count', search_count)
-
+	const quota_left = 10 - search_count
 	const Content = () => {
 		const Inactive = () => {
 			return (
@@ -93,7 +91,7 @@ const Dashboard = ({
 													Daily Free Quota
 												</div>
 												<div className="">
-													{10 - search_count} Left
+													{quota_left < 0 ? `${quota_left} Left` : 'Ended'}
 												</div>
 											</div>
 										)

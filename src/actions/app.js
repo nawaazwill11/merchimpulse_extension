@@ -53,11 +53,13 @@ export const signIn = (email, password) => (dispatch) => {
 			}
 
 			localStore.set(authTokenKey, response.payload.auth_token)
+				.then(() => {
+					dispatch(setApp({
+						auth: true,
+						view: 'dashboard',
+					}))
+				})
 
-			return dispatch(setApp({
-				auth: true,
-				view: 'dashboard',
-			}))
 
 		})
 }
@@ -70,14 +72,14 @@ const setInitialState = (dispatch) => {
 	}))
 }
 
-export const loadData = () => (dispatch) => {
+export const loadData = () => async (dispatch) => {
 	console.log('loading data')
-	const auth_token = localStore.get(authTokenKey)
-	console.log(auth_token)
+
+	const auth_token = await localStore.get(authTokenKey)
+
 	if (!auth_token) {
 		console.log('itthe')
 		return setInitialState(dispatch)
-
 	}
 
 	return fetch(PING_ROUTE, {
@@ -87,10 +89,12 @@ export const loadData = () => (dispatch) => {
 		})
 	})
 		.then((response) => response.json())
-		.then((response) => {
+		.then(async (response) => {
 			console.log(response)
 			if (response.error) {
-				window.localStorage.setItem('auth_token', '')
+				console.log('error in response')
+				await localStore.set(authTokenKey, '')
+				// window.localStorage.setItem('auth_token', '')
 				setInitialState(dispatch)
 			}
 			else {
@@ -98,11 +102,13 @@ export const loadData = () => (dispatch) => {
 				console.log(subs)
 				if (refreshed) {
 					console.log('refreshed')
-					window.localStorage.setItem('auth_token', token)
+					await localStore.set(authTokenKey, token)
+					// window.localStorage.setItem('auth_token', token)
 				}
-				const data = localStore.get()
+				const data = await localStore.get()
 				const active = data.hasOwnProperty('active') ? data.active : false
 				const filter = data.hasOwnProperty('filter') ? data.filter : ''
+				dispatch(setAuth(true))
 				dispatch(setState(subs.type))
 				dispatch(setSearchCount(subs.count))
 				dispatch(setActive(active))
@@ -118,8 +124,8 @@ export const loadData = () => (dispatch) => {
 }
 
 
-export const logout = () => (dispatch) => {
-	localStore.set(authTokenKey, '')
+export const logout = () => async (dispatch) => {
+	await localStore.set(authTokenKey, '')
 	dispatch(setAuth(false))
 	dispatch(setView('welcome'))
 }
