@@ -89,46 +89,18 @@ const messenger = (code) => {
 			})
 	})
 }
-export const localStore = {
-	get: (key) => {
-		return new Promise((resolve) => {
-			try {
-				const code = `localStorage.getItem('${localStoreKey}')`
-				messenger(code)
-					.then((store) => {
-						console.log(store)
-						const app_data = store ? JSON.parse(store) : {}
-						if (key) return resolve(app_data[key])
-						return resolve(app_data)
-					})
-			} catch (error) { console.log(error); return resolve(null) }
-		})
-	},
-	set: (key, value) => {
-		return new Promise((resolve) => {
-			try {
-				localStore.get()
-					.then((store) => {
-						store[key] = value
-						const set_code = `localStorage.setItem('${localStoreKey}', '${JSON.stringify(store)}')`
-						messenger(set_code)
-							.then(() => resolve())
-
-					})
-			} catch (error) { console.log(error); return null }
-		})
-	}
-}
-
-
 // export const localStore = {
 // 	get: (key) => {
 // 		return new Promise((resolve) => {
 // 			try {
-// 				const store = window.localStorage.getItem(localStoreKey)
-// 				const app_data = store ? JSON.parse(store) : {}
-// 				if (app_data && key) return resolve(app_data[key])
-// 				return resolve(app_data)
+// 				const code = `localStorage.getItem('${localStoreKey}')`
+// 				messenger(code)
+// 					.then((store) => {
+// 						console.log(store)
+// 						const app_data = store ? JSON.parse(store) : {}
+// 						if (key) return resolve(app_data[key])
+// 						return resolve(app_data)
+// 					})
 // 			} catch (error) { console.log(error); return resolve(null) }
 // 		})
 // 	},
@@ -138,10 +110,38 @@ export const localStore = {
 // 				localStore.get()
 // 					.then((store) => {
 // 						store[key] = value
-// 						window.localStorage.setItem(localStoreKey, JSON.stringify(store))
-// 						return resolve()
+// 						const set_code = `localStorage.setItem('${localStoreKey}', '${JSON.stringify(store)}')`
+// 						messenger(set_code)
+// 							.then(() => resolve())
+
 // 					})
-// 			} catch (error) { console.log(error); return resolve(null) }
+// 			} catch (error) { console.log(error); return null }
 // 		})
 // 	}
 // }
+
+
+export const localStore = {
+	get: (key) => {
+		return new Promise((resolve) => {
+			try {
+				const store = window.localStorage.getItem(localStoreKey)
+				const app_data = store ? JSON.parse(store) : {}
+				if (app_data && key) return resolve(app_data[key])
+				return resolve(app_data)
+			} catch (error) { console.log(error); return resolve(null) }
+		})
+	},
+	set: (key, value) => {
+		return new Promise((resolve) => {
+			try {
+				localStore.get()
+					.then((store) => {
+						store[key] = value
+						window.localStorage.setItem(localStoreKey, JSON.stringify(store))
+						return resolve()
+					})
+			} catch (error) { console.log(error); return resolve(null) }
+		})
+	}
+}

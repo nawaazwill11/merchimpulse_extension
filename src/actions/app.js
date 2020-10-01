@@ -25,45 +25,6 @@ export const setData = createAction(SET_DATA)
 export const setApp = createAction(SET_APP)
 export const setAuth = createAction(SET_AUTH)
 
-export const signIn = (email, password) => (dispatch) => {
-	console.log(email, password)
-	const errors = []
-	if (!emailValidate(email)) errors.push('Email format incorrect')
-	if (!password.match(/^.{8,25}$/)) errors.push('Password should be between 8-64 characters')
-	if (errors.length) {
-		return dispatch(setOverlay({ active: true, message: errors }))
-	}
-
-	return fetch(SIGNIN_ROUTE, {
-		method: 'POST',
-		headers: new Headers({
-			'Content-Type': 'application/json',
-		}),
-		body: JSON.stringify({ email, password })
-	})
-		.then((response) => response.json())
-		.then((response) => {
-			console.log('response', response)
-			if (response.error) {
-				return dispatch(setOverlay({
-					active: true,
-					title: 'Unauthorized',
-					message: [response.error]
-				}))
-			}
-
-			localStore.set(authTokenKey, response.payload.auth_token)
-				.then(() => {
-					dispatch(setApp({
-						auth: true,
-						view: 'dashboard',
-					}))
-				})
-
-
-		})
-}
-
 const setInitialState = (dispatch) => {
 	dispatch(setData({
 		auth: false,
@@ -121,6 +82,46 @@ export const loadData = () => async (dispatch) => {
 			dispatch(setInitialState(dispatch))
 		})
 
+}
+
+
+export const signIn = (email, password) => (dispatch) => {
+	console.log(email, password)
+	const errors = []
+	if (!emailValidate(email)) errors.push('Email format incorrect')
+	if (!password.match(/^.{8,25}$/)) errors.push('Password should be between 8-64 characters')
+	if (errors.length) {
+		return dispatch(setOverlay({ active: true, message: errors }))
+	}
+
+	return fetch(SIGNIN_ROUTE, {
+		method: 'POST',
+		headers: new Headers({
+			'Content-Type': 'application/json',
+		}),
+		body: JSON.stringify({ email, password })
+	})
+		.then((response) => response.json())
+		.then((response) => {
+			console.log('response', response)
+			if (response.error) {
+				return dispatch(setOverlay({
+					active: true,
+					title: 'Unauthorized',
+					message: [response.error]
+				}))
+			}
+
+			localStore.set(authTokenKey, response.payload.auth_token)
+				.then(() => {
+					dispatch(setApp({
+						auth: true,
+						view: 'dashboard',
+					}))
+				})
+
+
+		})
 }
 
 

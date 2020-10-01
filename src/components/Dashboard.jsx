@@ -17,7 +17,8 @@ const Dashboard = ({
 	setActiveFilter,
 	logout,
 }) => {
-	const quota_left = 10 - search_count
+
+	const quota = state === 'pro' ? 'Unlimited' : `${10 - search_count} Left`
 	const Content = () => {
 		const Inactive = () => {
 			return (
@@ -30,8 +31,8 @@ const Dashboard = ({
 							Click this to activate
 						</div>
 						<div className="arrow">
-							<div className="curve"></div>
-							<div className="point"></div>
+							<div className="curve" />
+							<div className="point" />
 						</div>
 					</div>
 				</div>
@@ -91,7 +92,7 @@ const Dashboard = ({
 													Daily Free Quota
 												</div>
 												<div className="">
-													{quota_left < 0 ? `${quota_left} Left` : 'Ended'}
+													{quota}
 												</div>
 											</div>
 										)
@@ -157,7 +158,7 @@ const Dashboard = ({
 				<div className="hp row switch flex v-center margin-bottom1">
 					<div className="hp flex1">
 						<div className="checkbox-container yellow">
-							<input type="checkbox" id="toggle" className="toggle" defaultChecked={active} />
+							<input type="checkbox" id="toggle" className="toggle" checked={active} />
 							<label htmlFor="toggle" className={active ? 'active' : ''}
 								onClick={() => setActive(!active)}></label>
 							<div className="active-circle"></div>
