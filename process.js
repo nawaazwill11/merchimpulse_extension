@@ -24,12 +24,12 @@
 	}
 
 	const auth_token = localStore.get(authTokenKey)
-	const filter = localStore.get(filterKey).toLowerCase()
+	const filter = localStore.get(filterKey)
 	const active = localStore.get(activeKey)
 
 	function filterRedirect() {
 		const regex = new RegExp('https://www.amazon..*/.*?.*=.*')
-		const filter_string = `&i=fashion-novelty&hidden-keywords=${filter}`
+		const filter_string = `&i=fashion-novelty&hidden-keywords=${filter.toLowerCase()}`
 		const filter_options = [
 			't-shirt',
 			'premium',
@@ -106,22 +106,49 @@
 		return Promise.resolve(false)
 	}
 
+	function trademarkCheck() {
+
+		const regex = new RegExp('https://www.tmdn.org/tmview/api/search/*')
+
+		if (window.location.href.match(regex)) {
+
+			const data = JSON.parse(document.body.innerText)
+
+			chrome.runtime.sendMessage({ action: 'DATA', data })
+			
+			window.close()
+		}
+	}
+
+	function listenToTrademarkData() {
+		window.chrome.runtime.onMessage.addListener((req, sender, res) => {
+			if (req.action === 'receiveTrademarkData') {
+				const bc = new window.BroadcastChannel('trademark')
+				bc.postMessage(req.data)
+				bc.close()
+			}
+			res({})
+		})
+	}
+
 	window.addEventListener('load', function () {
-		filterRedirect()
-		pingServer()
-			.then((response) => response ? response.json() : Promise.resolve({}))
-			.then((response) => {
-				if (response.error) return localStore.set(authTokenKey, '')
-				if (
-					response.success
-					&& (response.subs.type === 'pro' || response.subs.count < 11)
-					&& active
-				) {
-					injectContainer()
-						.then(() => appendScripts())
-						.then(() => {})
-						.catch((error) => console.log(error))
-				}
-			})
+		trademarkCheck()
+		listenToTrademarkData()
+		// filterRedirect()
+		// pingServer()
+		// 	.then((response) => response ? response.json() : Promise.resolve({}))
+		// 	.then((response) => {
+		// 		if (response.error) return localStore.set(authTokenKey, '')
+		// 		if (
+		// 			response.success
+		// 			&& (response.subs.type === 'pro' || response.subs.count < 11)
+		// 			&& active
+		// 		) {
+		// 			injectContainer()
+		// 				.then(() => appendScripts())
+		// 				.then(() => {})
+		// 				.catch((error) => console.log(error))
+		// 		}
+		// 	})
 	})
 }()
