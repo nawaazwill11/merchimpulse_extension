@@ -28,7 +28,6 @@ window.chrome.runtime.onInstalled.addListener(function () {
 	})
 })
 
-
 const server = function (request, response) {
 
 	console.log(request)
