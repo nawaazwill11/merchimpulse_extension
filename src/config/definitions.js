@@ -6,6 +6,8 @@ export const extension_id = 'anefmjkkelhnceplpbmoakibocfoimlo'
 
 // export const extension_id = 'gcfhlcjmpnknffcpblnadkljicabdnfn';
 
+// export const server_uri = 'http://localhost:8000'
+
 export const server_uri = 'https://merchimpulse.com'
 export const route = (path) => `${server_uri}/${path}`
 export const HISTORY_ROUTE = route('dashboard/analysis')
@@ -72,23 +74,6 @@ export const activeKey = 'active'
 export const localStoreKey = 'app_data'
 export const authTokenKey = 'auth_token'
 
-const getTabId = () => (
-	new Promise((resolve) => {
-		window.chrome.tabs.query({ active: true, currentWindow: true }, (tab) => {
-			console.log(tab)
-			resolve(tab.id)
-		})
-	})
-)
-
-const messenger = (code) => {
-	return new Promise((resolve) => {
-		getTabId()
-			.then((id) => {
-				window.chrome.tabs.executeScript(id, { code: code }, (response) => resolve(response[0]))
-			})
-	})
-}
 // export const localStore = {
 // 	get: (key) => {
 // 		return new Promise((resolve) => {
@@ -121,27 +106,47 @@ const messenger = (code) => {
 // }
 
 
+// export const localStore = {
+// 	get: (key) => {
+// 		return new Promise((resolve) => {
+// 			try {
+// 				const store = window.localStorage.getItem(localStoreKey)
+// 				const app_data = store ? JSON.parse(store) : {}
+// 				if (app_data && key) return resolve(app_data[key])
+// 				return resolve(app_data)
+// 			} catch (error) { console.log(error); return resolve(null) }
+// 		})
+// 	},
+// 	set: (key, value) => {
+// 		return new Promise((resolve) => {
+// 			try {
+// 				localStore.get()
+// 					.then((store) => {
+// 						store[key] = value
+// 						window.localStorage.setItem(localStoreKey, JSON.stringify(store))
+// 						return resolve()
+// 					})
+// 			} catch (error) { console.log(error); return resolve(null) }
+// 		})
+// 	}
+// }
+
+const messenger = (message, callback) => {
+	window.chrome.runtime.sendMessage(extension_id, message, (response) => callback(response))
+}
+
+export const STORAGE_GET = 'STORAGE_GET'
+export const STORAGE_SET = 'STORAGE_SET'
+
 export const localStore = {
-	get: (key) => {
-		return new Promise((resolve) => {
-			try {
-				const store = window.localStorage.getItem(localStoreKey)
-				const app_data = store ? JSON.parse(store) : {}
-				if (app_data && key) return resolve(app_data[key])
-				return resolve(app_data)
-			} catch (error) { console.log(error); return resolve(null) }
+	get: (key) => (
+		new Promise((resolve) => {
+			messenger({ action: STORAGE_GET, key }, (value) => resolve(value))
 		})
-	},
-	set: (key, value) => {
-		return new Promise((resolve) => {
-			try {
-				localStore.get()
-					.then((store) => {
-						store[key] = value
-						window.localStorage.setItem(localStoreKey, JSON.stringify(store))
-						return resolve()
-					})
-			} catch (error) { console.log(error); return resolve(null) }
+	),
+	set: (key, value) => (
+		new Promise((resolve) => {
+			messenger({ action: STORAGE_SET, key, value }, () => resolve())
 		})
-	}
+	)
 }

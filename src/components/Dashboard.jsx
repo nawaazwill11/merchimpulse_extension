@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Header from './Header'
 import {
@@ -18,7 +18,13 @@ const Dashboard = ({
 	logout,
 }) => {
 
+	useEffect(() => {
+		const body = document.querySelector('body')
+		body.style.height = state === 'pro' ? '510px' : '540px'
+	})
+
 	const quota = state === 'pro' ? 'Unlimited' : `${10 - search_count} Left`
+	
 	const Content = () => {
 		const Inactive = () => {
 			return (

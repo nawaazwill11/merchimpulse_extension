@@ -37,6 +37,7 @@ export const loadData = () => async (dispatch) => {
 	console.log('loading data')
 
 	const auth_token = await localStore.get(authTokenKey)
+	console.log(auth_token)
 
 	if (!auth_token) {
 		console.log('itthe')
@@ -54,7 +55,7 @@ export const loadData = () => async (dispatch) => {
 			console.log(response)
 			if (response.error) {
 				console.log('error in response')
-				await localStore.set(authTokenKey, '')
+				// await localStore.set(authTokenKey, '')
 				// window.localStorage.setItem('auth_token', '')
 				setInitialState(dispatch)
 			}
@@ -66,9 +67,8 @@ export const loadData = () => async (dispatch) => {
 					await localStore.set(authTokenKey, token)
 					// window.localStorage.setItem('auth_token', token)
 				}
-				const data = await localStore.get()
-				const active = data.hasOwnProperty('active') ? data.active : false
-				const filter = data.hasOwnProperty('filter') ? data.filter : ''
+				const active = await localStore.get(activeKey) || false
+				const filter = await localStore.get(filterKey) || ''
 				dispatch(setAuth(true))
 				dispatch(setState(subs.type))
 				dispatch(setSearchCount(subs.count))
@@ -79,7 +79,7 @@ export const loadData = () => async (dispatch) => {
 		})
 		.catch((error) => {
 			console.error(error)
-			dispatch(setInitialState(dispatch))
+			setInitialState(dispatch)
 		})
 
 }
