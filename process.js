@@ -37,9 +37,10 @@
 
 	function filterRedirect() {
 		if (!filter) return null
-		console.log(filter)
+		const filter_to_use = filter.toLowerCase()
 		const regex = new RegExp('https://www.amazon..*/.*?.*=.*')
-		const filter_string = `&i=fashion-novelty&hidden-keywords=${filter.toLowerCase()}`
+		// const regex = new RegExp('http://localhost:3000/')
+		const filter_string = `&i=fashion-novelty&hidden-keywords=${filter_to_use}`
 		const filter_options = [
 			't-shirt',
 			'premium',
@@ -49,8 +50,7 @@
 		]
 		if (
 			window.location.href.match(regex)
-			&& filter
-			&& filter_options.includes(filter)
+			&& filter_options.includes(filter_to_use)
 			&& !window.location.href.match(filter_string)
 		) window.location.href = window.location.href + filter_string
 	}
@@ -103,6 +103,7 @@
 	)
 
 	function pingServer() {
+		console.log(auth_token)
 		if (auth_token) {
 			return (
 				fetch('https://merchimpulse.com/api/ping', {
@@ -124,7 +125,7 @@
 
 			const data = JSON.parse(document.body.innerText)
 
-			chrome.runtime.sendMessage({ action: 'DATA', data })
+			window.chrome.runtime.sendMessage({ action: 'DATA', data })
 			
 			window.close()
 		}
@@ -151,22 +152,21 @@
 		trademarkCheck()
 		listenToTrademarkData()
 		filterRedirect()
-		// pingServer()
-		// 	.then((response) => response ? response.json() : Promise.resolve({}))
-		// 	.then(async (response) => {
-		// 		console.log(response)
-		// 		if (response.error) return await localStore.set(authTokenKey, '')
-		// 		if (
-		// 			response.success
-		// 			&& (response.subs.type === 'pro' || response.subs.count < 11)
-		// 			&& active
-		// 		) {
-		// 			injectContainer()
-		// 				.then(() => appendScripts())
-		// 				.then(() => { })
-		// 				.catch((error) => console.log(error))
-		// 		}
-		// 	})
-
+		pingServer()
+			.then((response) => response ? response.json() : Promise.resolve({}))
+			.then(async (response) => {
+				console.log(response)
+				if (response.error) return await localStore.set(authTokenKey, '')
+				if (
+					response.success
+					&& (response.subs.type === 'pro' || response.subs.count < 11)
+					&& active
+				) {
+					injectContainer()
+						.then(() => appendScripts())
+						.then(() => { })
+						.catch((error) => console.log(error))
+				}
+			})
 	})
 }()

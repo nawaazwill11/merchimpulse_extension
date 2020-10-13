@@ -12,6 +12,12 @@ const Signin = ({
 		signIn(email, password)
 	}
 
+	const handleKeyDown = (e) => {
+		if (e.keyCode === 13) {
+			handleSignIn()
+		}
+	}
+
 	return (
 		<>
 			<Header />
@@ -23,10 +29,10 @@ const Signin = ({
                         </div> */}
 						<div className="hp flex-column flex20 v-center h-center padding1">
 							<div className="hp row flex h-center margin1">
-								<input className="hp inp" type="email" id="email" placeholder="Email" />
+								<input className="hp inp" type="email" id="email" placeholder="Email" onKeyDown={handleKeyDown} />
 							</div>
 							<div className="hp row flex h-center margin1">
-								<input className="hp inp" type="password" id="password" placeholder="Password" />
+								<input className="hp inp" type="password" id="password" placeholder="Password" onKeyDown={handleKeyDown} />
 							</div>
 							<div className="hp row">
 								<a className="hp font-size_8"
