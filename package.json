@@ -26,7 +26,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && python3 build.py",
+    "build": "react-scripts build && py build.py",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

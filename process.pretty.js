@@ -41,7 +41,7 @@
 		const filter_to_use = filter.toLowerCase()
 		const regex = new RegExp('https://www.amazon..*/.*?.*=.*')
 		// const regex = new RegExp('http://localhost:3000/')
-		const filter_string = `&i=fashion-novelty&hidden-keywords=${filter_to_use}`
+		const filter_string = `&i=fashion-novelty&bbn=12035955011&rh=p_6%3AATVPDKIKX0DER&hidden-keywords=${filter_to_use}`
 		const filter_options = [
 			't-shirt',
 			'premium',
