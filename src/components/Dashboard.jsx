@@ -156,7 +156,7 @@ const Dashboard = ({
 		}
 		return active ? Active() : Inactive()
 	}
-	console.log(Content)
+	// console.log(Content)
 	return (
 		<>
 			<Header />

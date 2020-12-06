@@ -20,7 +20,7 @@ const App = ({
 		signin: Signin,
 		welcome: Welcome,
 	}
-	console.log(view)
+	// console.log(view)
 	const Component = views[view]
 	const overlay = overlay_active ? <Overlay /> : ''
 	return (

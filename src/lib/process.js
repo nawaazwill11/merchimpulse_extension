@@ -1,27 +1,12 @@
 !function () {
-	console.log = () => {}
+	
 	const authTokenKey = 'auth_token'
 	const filterKey = 'filter'
 	const activeKey = 'active'
 	const container_selector = '_mi_injected_element'
-
-	// const localStore = {
-	// 	get: (key) => {
-	// 		try {
-	// 			const store = window.localStorage.getItem(localStoreKey)
-	// 			const app_data = store ? JSON.parse(store) : {}
-	// 			if (app_data && key) return app_data[key]
-	// 			return app_data
-	// 		} catch (error) { console.log(error); return null }
-	// 	},
-	// 	set: (key, value) => {
-	// 		try {
-	// 			const app_data = localStore.get()
-	// 			app_data[key] = value
-	// 			window.localStorage.setItem(localStoreKey, JSON.stringify(app_data))
-	// 		} catch (error) { console.log(error); return null }
-	// 	}
-	// }
+	const HOST = 'https://merchimpulse.com'
+	// const HOST = 'http://localhost:8000'
+	let auth_token, filter, active
 
 	const localStore = {
 		get: (key) => (
@@ -39,7 +24,7 @@
 	function filterRedirect() {
 		if (!filter) return null
 		const filter_to_use = filter.toLowerCase()
-		const regex = new RegExp('https://www.amazon..*/.*?.*=.*')
+		const regex = new RegExp('https:\/\/www.amazon.(com|co.uk|de)\/.*?.*=.*')
 		// const regex = new RegExp('http://localhost:3000/')
 		const filter_string = `&i=fashion-novelty&bbn=12035955011&rh=p_6%3AATVPDKIKX0DER&hidden-keywords=${filter_to_use}`
 		const filter_options = [
@@ -78,7 +63,6 @@
 			try {
 				const head = document.head
 				const styles = [
-					'bootstrap.min.css',
 					'style.css',
 				]
 				styles.forEach((style) => {
@@ -107,7 +91,7 @@
 		console.log(auth_token)
 		if (auth_token) {
 			return (
-				fetch('https://merchimpulse.com/api/ping', {
+				fetch(`${HOST}/api/ping`, {
 					method: 'POST',
 					headers: new Headers({
 						Authorization: auth_token,
@@ -127,7 +111,7 @@
 			const data = JSON.parse(document.body.innerText)
 
 			window.chrome.runtime.sendMessage({ action: 'DATA', data })
-			
+
 			window.close()
 		}
 	}
@@ -143,31 +127,33 @@
 			res({})
 		})
 	}
-	let auth_token, filter, active
 
 	window.addEventListener('load', async function () {
-		auth_token = await localStore.get(authTokenKey)
-		filter = await localStore.get(filterKey)
-		active = await localStore.get(activeKey)
+		try {
+			auth_token = await localStore.get(authTokenKey)
+			filter = await localStore.get(filterKey)
+			active = await localStore.get(activeKey)
 
-		trademarkCheck()
-		listenToTrademarkData()
-		filterRedirect()
-		pingServer()
-			.then((response) => response ? response.json() : Promise.resolve({}))
-			.then(async (response) => {
-				// console.log(response)
-				// if (response.error) return await localStore.set(authTokenKey, '')
-				if (
-					response.success
-					&& (response.subs.type === 'pro' || response.subs.count < 11)
-					&& active
-				) {
-					injectContainer()
-						.then(() => appendScripts())
-						.then(() => { })
-						.catch((error) => console.log(error))
-				}
-			})
+			trademarkCheck()
+			listenToTrademarkData()
+			filterRedirect()
+			pingServer()
+				.then((response) => response ? response.json() : Promise.resolve({}))
+				.then(async (response) => {
+					console.log('extension ping response:', response)
+					// if (response.error) return await localStore.set(authTokenKey, '')
+					if (
+						response.success
+						&& (response.subs.type === 'pro' || response.subs.count < 11)
+						&& active
+					) {
+						injectContainer()
+							.then(() => appendScripts())
+							.catch((error) => console.log(error))
+					}
+				})
+		} catch (error) {
+			return null
+		}
 	})
 }()

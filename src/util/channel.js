@@ -7,12 +7,12 @@ export default (function () {
         return new Promise((resolve, reject) => {
 
             try {
-                console.log(message);
+                // console.log(message);
                 window.chrome.runtime.sendMessage(
                     extension_id,
                     message,
                     function (result) {
-                        console.log('result', result)
+                        // console.log('result', result)
                         resolve(result);
                     }
                 );

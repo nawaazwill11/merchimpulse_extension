@@ -34,13 +34,13 @@ const setInitialState = (dispatch) => {
 }
 
 export const loadData = () => async (dispatch) => {
-	console.log('loading data')
+	// console.log('loading data')
 
 	const auth_token = await localStore.get(authTokenKey)
-	console.log(auth_token)
+	// console.log(auth_token)
 
 	if (!auth_token) {
-		console.log('itthe')
+		// console.log('itthe')
 		return setInitialState(dispatch)
 	}
 
@@ -52,18 +52,18 @@ export const loadData = () => async (dispatch) => {
 	})
 		.then((response) => response.json())
 		.then(async (response) => {
-			console.log(response)
+			// console.log(response)
 			if (response.error) {
-				console.log('error in response')
+				// console.log('error in response')
 				// await localStore.set(authTokenKey, '')
 				// window.localStorage.setItem('auth_token', '')
 				setInitialState(dispatch)
 			}
 			else {
 				const { subs, refreshed, token } = response
-				console.log(subs)
+				// console.log(subs)
 				if (refreshed) {
-					console.log('refreshed')
+					// console.log('refreshed')
 					await localStore.set(authTokenKey, token)
 					// window.localStorage.setItem('auth_token', token)
 				}
@@ -86,7 +86,7 @@ export const loadData = () => async (dispatch) => {
 
 
 export const signIn = (email, password) => (dispatch) => {
-	console.log(email, password)
+	// console.log(email, password)
 	const errors = []
 	if (!emailValidate(email)) errors.push('Email format incorrect')
 	if (!password.match(/^.{8,25}$/)) errors.push('Password should be between 8-64 characters')
@@ -103,7 +103,7 @@ export const signIn = (email, password) => (dispatch) => {
 	})
 		.then((response) => response.json())
 		.then((response) => {
-			console.log('response', response)
+			// console.log('response', response)
 			if (response.error) {
 				return dispatch(setOverlay({
 					active: true,

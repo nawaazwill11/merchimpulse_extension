@@ -7,8 +7,8 @@ export const extension_id = 'anefmjkkelhnceplpbmoakibocfoimlo'
 // export const extension_id = 'gcfhlcjmpnknffcpblnadkljicabdnfn';
 
 // export const server_uri = 'http://localhost:8000'
-
 export const server_uri = 'https://merchimpulse.com'
+
 export const route = (path) => `${server_uri}/${path}`
 export const HISTORY_ROUTE = route('dashboard/analysis')
 export const BOOKMARKS_ROUTE = route('dashboard/analysis')

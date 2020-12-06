@@ -16,7 +16,7 @@ async function validateData(response) {
 
     try {
 
-        console.log('validating...');
+        // console.log('validating...');
 
         const storage_identifiers = Object.keys(defaults);
         const to_set = {};
